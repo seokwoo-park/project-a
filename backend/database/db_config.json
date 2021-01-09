@@ -1,0 +1,7 @@
+{
+    "host" : "localhost",
+    "user" : "bloger",
+    "password" : "1111",
+    "database" : "blog_db",
+    "connectionLimit" : 20
+}

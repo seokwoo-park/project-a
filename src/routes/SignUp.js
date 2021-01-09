@@ -30,12 +30,14 @@ function SignUp() {
         e.preventDefault();
         // 패스워드 확인
         if (passwordCheck !== userData.password){
-            alert ("Passwords must be same!")
+            alert ("Passwords must be same!");
+            return false;
         } else if (userData.password.length < 6 && passwordCheck.length < 6 ){
-            alert ("Passwords must be over 6 digit!")
+            alert ("Passwords must be over 6 digit!");
+            return false;
         }
 
-        axios.post('/register',{...userData})
+        axios.post('http://localhost:8081/user/register',{...userData})
         .then((result)=>{history.push('/login'); console.log(result,"전달완료")})
         .catch(error=>{console.log(error,"실패")})
         

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 function LogIn() {
@@ -15,9 +16,17 @@ function LogIn() {
         console.log("email",email, "password",password);
     }
 
-    function onSubmitHandler (e) {
+    const onSubmitHandler = async (e)  =>{
         e.preventDefault();
-        console.log("Submitted")
+        try {
+            let data;
+            data = await axios.post('http://localhost:8081/user/login',{email : email, password : password});
+            console.log('로그인 데이터 보내기 성공',data);
+            //.then 나중에 검사후 로그인 데이터를 받아오는 코드
+        } catch(error){
+            console.log(error);
+            alert('Incorrect email or password. please check again!');
+        }
     }
 
     return (
