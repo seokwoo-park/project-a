@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+import {useHistory} from 'react-router-dom'
 
 function SignUp() {
+
+    const history = useHistory();
 
     const [userData,setUserData] = useState({nickName : "" , email : "" , password : ""});
     const [passwordCheck,setPasswordCheck] = useState("");
@@ -30,6 +34,12 @@ function SignUp() {
         } else if (userData.password.length < 6 && passwordCheck.length < 6 ){
             alert ("Passwords must be over 6 digit!")
         }
+
+        axios.post('/register',{...userData})
+        .then((result)=>{history.push('/login'); console.log(result,"전달완료")})
+        .catch(error=>{console.log(error,"실패")})
+        
+
     }
 
     return (
