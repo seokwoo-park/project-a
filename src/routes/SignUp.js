@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
+import {TextField,Button } from '@material-ui/core';
+import '../css/SignUp.css';
+
 
 function SignUp() {
 
@@ -45,16 +48,18 @@ function SignUp() {
     }
 
     return (
-        <div>
-            <h1>Sign up</h1>
-            {console.log(userData, passwordCheck)}
-            <form onSubmit={onSubmitHandler}>
-                <input onChange={onChangeHandler} required value={userData.nickName} name="nickname" type="text" placeholder="Nickname"/>
-                <input onChange={onChangeHandler} required value={userData.email} name="email" type="email" placeholder="Email"/>
-                <input onChange={onChangeHandler} required value={userData.password} name="password" type="password" placeholder="Password"/>
-                <input onChange={onChangeHandler} required value={passwordCheck} name="passwordCheck" type="password" placeholder="Confirm Password "/>
-                <input onSubmit={onSubmitHandler} type="submit" value="Submit"/>
-            </form>
+        <div className="signUp">
+            <h1>Welcome to Yaja Tree </h1>
+            <div>
+                <form className="form_container" onSubmit={onSubmitHandler}>
+                    <h2>SIGN UP</h2>
+                    <TextField onChange={onChangeHandler} label="Nickname" required value={userData.nickName} name="nickname" type="text" placeholder="Nickname"/>
+                    <TextField onChange={onChangeHandler} label="Email" required value={userData.email} name="email" type="email" placeholder="Email"/>
+                    <TextField onChange={onChangeHandler} label="Password" required value={userData.password} name="password" type="password" placeholder="Password"/>
+                    <TextField onChange={onChangeHandler} label="Password Confirm" required value={passwordCheck} name="passwordCheck" type="password" placeholder="Confirm Password "/>
+                    <Button className="btn_signUp" onSubmit={onSubmitHandler} type="submit" value="Submit"variant="contained" color="primary">Submit</Button>
+                 </form>
+            </div>
         </div>
     )
 }

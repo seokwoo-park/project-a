@@ -1,0 +1,20 @@
+.logIn {
+    background-color: rgb(40, 153, 91);
+    height: 100vh;
+    text-align: center;
+}
+
+.logIn > h1 {
+    color: white;
+    font-size: 5rem;
+    position: relative;
+    top: 60px;
+}
+
+.logIn_form > h2 {
+    font-size: 3rem;
+}
+
+.logIn > .logIn_form {
+    justify-content: space-around;
+}

@@ -1,0 +1,70 @@
+/* background-color: #ff8180; */
+.auth {
+    background: linear-gradient(-45deg, #08700d, #1bcc6b, #23a6d5, #23d5ab);
+    animation: 10s ease infinite moves;
+    height: 100vh;
+    width: 100%;
+    background-size: 400% 400%;
+}
+
+@keyframes moves {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.auth_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 25%;
+}
+
+.auth_container > h1 {
+    font-size: 7rem;
+    color: white;
+}
+
+.auth_container > .auth_signUp {
+    border-style: none;
+    background-color: white;
+    color: #58b36e;
+    border-radius: 8px;
+    font-size: 2rem;
+    padding: 10px 40px;
+    width: 283px;
+    margin-top: 20px;
+}
+
+.auth_container > .auth_signUp:hover {
+    width: 350px;
+    transition: ease 0.5s;
+}
+
+.auth_loginContainer {
+    display: flex;
+    margin-top: 10px;
+    justify-items: space-around;
+    align-items: center;
+}
+
+.auth_login {
+    color: rgba(66, 15, 15, 0.705);
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.auth_loginContainer > p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+}

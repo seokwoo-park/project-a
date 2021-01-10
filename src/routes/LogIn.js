@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import {TextField,Button} from '@material-ui/core';
+import '../css/LogIn.css';
+
 
 function LogIn() {
     const [email,setEmail] = useState("");
@@ -30,19 +33,33 @@ function LogIn() {
     }
 
     return (
-        <div>
-            <h1>Log in</h1>
-            <form onSubmit={onSubmitHandler}>
-                <div>
-                    <p>Email</p>
-                    <input onChange={onChangeHandler} required value={email} name="email" type="email" placeholder="Email"/>
-                </div>
-                <div>
-                    <p>Password</p>
-                    <input onChange={onChangeHandler} required value={password} name="password" type="password" placeholder="Password"/>
-                </div>
-                <input onSubmit={onSubmitHandler} type="submit" value="Log In"/>
+        <div className="logIn">
+            <h1>Yaja tree</h1>
+            <form className="form_container logIn_form" onSubmit={onSubmitHandler}>
+                <h2>LOG IN</h2>
+                <TextField
+                onChange={onChangeHandler}
+                required value={email}
+                name="email"
+                label="Email"
+                type="email"
+                placeholder="Login Email"
+                rowsMax={2}
+                variant="outlined"
+                />
+
+                <TextField
+                onChange={onChangeHandler} required value={password} name="password"
+                label="Password"
+                placeholder="Password"
+                type="password"
+                variant="outlined"
+                />
+                <Button className="btn_logIn" onSubmit={onSubmitHandler} type="submit" variant="contained" color="primary">Log In</Button>
             </form>
+
+                    
+
         </div>
     )
 }
