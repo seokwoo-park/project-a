@@ -3,9 +3,12 @@ import React, { useState } from 'react'
 import {TextField,Button} from '@material-ui/core';
 import '../css/LogIn.css';
 import {useCookies} from 'react-cookie';
+import {useHistory} from 'react-router-dom'
 
 
 function LogIn() {
+    const history = useHistory();
+
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [cookies, setCookie, removeCookies] = useCookies(['']);
@@ -34,9 +37,10 @@ function LogIn() {
                 return false;
             }else{
                 console.log('인증성공',res);
+                //엑세스토큰과 리프레쉬토큰 저장
                 setCookie('x_auth', res.data[0], {maxAge : 1800});
                 localStorage.setItem('r_x_auth', res.data[1]);
-                //엑세스토큰과 리프레쉬토큰 저장
+                history.push('/home');
             }
         })
     }
