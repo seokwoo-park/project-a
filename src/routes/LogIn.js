@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import {TextField,Button} from '@material-ui/core';
 import '../css/LogIn.css';
+import {useCookies} from 'react-cookie';
 
 
 function LogIn() {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const [cookies, setCookie, removeCookies] = useCookies(['']);
 
     function onChangeHandler (e) {
         const {target : {name,value}} = e;
@@ -15,22 +17,31 @@ function LogIn() {
         } else if (name === "password"){
             setPassword(value);
         }
-
-        console.log("email",email, "password",password);
     }
 
     const onSubmitHandler = async (e)  =>{
         e.preventDefault();
-        try {
-            let data;
-            data = await axios.post('http://localhost:8081/user/login',{email : email, password : password});
-            console.log('로그인 데이터 보내기 성공',data);
-            //.then 나중에 검사후 로그인 데이터를 받아오는 코드
-        } catch(error){
-            console.log(error);
-            alert('Incorrect email or password. please check again!');
-        }
+        await axios.post('http://localhost:8081/user/login',{
+        email : email, password : password
+        })
+        .then(res => {
+            console.log(res);
+            if(res.data === 0){
+                alert('아이디가 존재하지 않습니다.');
+                return false;
+            }else if(res.data === 1){
+                alert('비밀번호가 일치하지 않습니다.');
+                return false;
+            }else{
+                console.log('인증성공',res);
+                setCookie('x_auth', res.data[0], {maxAge : 1800});
+                localStorage.setItem('r_x_auth', res.data[1]);
+                //엑세스토큰과 리프레쉬토큰 저장
+            }
+        })
     }
+
+
 
     return (
         <div className="logIn">
@@ -63,5 +74,6 @@ function LogIn() {
         </div>
     )
 }
+
 
 export default LogIn

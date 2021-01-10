@@ -1,11 +1,11 @@
 'use strict';
 
-var mysql = require('mysql');
-var db_cofig = require('./db_config.json');
+const mysql = require('mysql');
+const db_cofig = require('./db_config.json');
 
-var pool = mysql.createPool(db_cofig);
+const pool = mysql.createPool(db_cofig);
 
-var getConnection = function(callback){
+const getConnection = function(callback){
     pool.getConnection(function(err, connection) {
         callback(err, connection);
     });
