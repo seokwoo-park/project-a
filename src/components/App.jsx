@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie'
-import '../App.css';
-import Routes from './Routes.jsx';
-import {useHistory} from 'react-router-dom'
+import React, { useEffect } from "react";
+import Cookies from "js-cookie";
+import "../App.css";
+import Routes from "./Routes.jsx";
 
-function App() {
-
-  const history = useHistory();
-  
-  useEffect(()=>{
-    const IsCookie = Cookies.get('x_auth');
-    if (IsCookie !== undefined){
-       console.log('토큰확인완료')
-       //수정할부분.. 
-       history.push('/home');
-      }
-      
-  },[])
-
+function App({ history }) {
+  useEffect(() => {
+    const IsCookie = Cookies.get("x_auth");
+    if (IsCookie !== undefined) {
+      console.log("토큰확인완료");
+      //수정할부분..
+      history.push("/home");
+    }
+  }, [history]);
 
   return (
     <div className="App">
-        <Routes/>
+      <Routes />
     </div>
   );
 }
