@@ -13,7 +13,7 @@ function LogIn({ history }) {
 
   const { email, password } = inputs;
 
-  function onChangeHandler2(e) {
+  function onChangeHandler(e) {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
@@ -52,7 +52,7 @@ function LogIn({ history }) {
       <form className="form_container logIn_form">
         <h2>LOG IN</h2>
         <TextField
-          onChange={onChangeHandler2}
+          onChange={onChangeHandler}
           required
           value={email}
           name="email"
@@ -64,7 +64,7 @@ function LogIn({ history }) {
         />
 
         <TextField
-          onChange={onChangeHandler2}
+          onChange={onChangeHandler}
           required
           value={password}
           name="password"
