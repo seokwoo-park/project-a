@@ -1,0 +1,22 @@
+.postUpload {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.postUpload_form {
+    display: flex;
+    justify-content: center;
+}
+
+.postUpload_text {
+    padding: 10px;
+    font-size: 1.2rem;
+    width: 800px;
+    height: 80px;
+}
+
+.postUpload_form_files {
+    display: flex;
+    margin: auto;
+}
