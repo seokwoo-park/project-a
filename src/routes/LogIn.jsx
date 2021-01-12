@@ -9,7 +9,7 @@ function LogIn({ history }) {
     email: "",
     password: "",
   });
-  const [setCookie] = useCookies([""]);
+  const [, setCookie] = useCookies(["x_auth"]);
 
   const { email, password } = inputs;
 
@@ -49,7 +49,7 @@ function LogIn({ history }) {
   return (
     <div className="logIn">
       <h1>Yaja tree</h1>
-      <form className="form_container logIn_form">
+      <form className="form_container logIn_form" onSubmit={onSubmitHandler}>
         <h2>LOG IN</h2>
         <TextField
           onChange={onChangeHandler}

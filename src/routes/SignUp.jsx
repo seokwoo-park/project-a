@@ -5,17 +5,16 @@ import "../css/SignUp.css";
 
 function SignUp({ history }) {
   const [userData, setUserData] = useState({
-    nickname: "",
+    nickName: "",
     email: "",
     password: "",
     passwordCheck: "",
   });
-  const { nickname, email, password, passwordCheck } = userData;
+  const { nickName, email, password, passwordCheck } = userData;
 
   function onChangeHandler(e) {
     e.preventDefault();
     const { name, value } = e.target;
-    console.log(name, value);
     setUserData({
       ...userData,
       [name]: value,
@@ -42,7 +41,7 @@ function SignUp({ history }) {
       .catch((error) => {
         console.log(error, "실패");
         setUserData({
-          nickname: "",
+          nickName: "",
           email: "",
           password: "",
           passwordCheck: "",
@@ -60,8 +59,8 @@ function SignUp({ history }) {
             onChange={onChangeHandler}
             label="Nickname"
             required
-            value={nickname}
-            name="nickname"
+            value={nickName}
+            name="nickName"
             type="text"
             placeholder="Nickname"
           />
