@@ -1,9 +1,15 @@
 import React from "react";
-import Main from "../components/Main";
+import Main from "../MainContainer/components/Main.jsx";
+import AppBar from "../MainContainer/components/AppBar.jsx";
 
 function Home() {
   console.log("Home page");
-  return <Main />;
+  return (
+    <div>
+      <AppBar/>
+      <Main />
+    </div>
+  );
 }
 
 export default Home;
