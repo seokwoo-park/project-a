@@ -1,8 +1,8 @@
 import React from "react";
-import Auth from "../routes/Auth.jsx";
-import Login from "../routes/LogIn.jsx";
-import SignUp from "../routes/SignUp.jsx";
-import Home from "../routes/Home.jsx";
+import Auth from "../routes/components/Auth.jsx";
+import Login from "../routes/components/LogIn.jsx";
+import SignUp from "../routes/components/SignUp.jsx";
+import Home from "../routes/components/Home.jsx";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
 

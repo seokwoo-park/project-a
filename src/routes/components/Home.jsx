@@ -1,6 +1,6 @@
 import React from "react";
-import Main from "../MainContainer/components/Main.jsx";
-import AppBar from "../MainContainer/components/AppBar.jsx";
+import Main from "../../MainContainer/Main.jsx";
+import AppBar from "../../MainContainer/components/AppBar.jsx";
 
 function Home() {
   console.log("Home page");
