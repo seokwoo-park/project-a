@@ -1,3 +1,4 @@
+'use strict'
 const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js');
@@ -54,6 +55,7 @@ router.post('/login', (req, res) => {
             }else{
                 console.log(rows);
                 var hash_pw = rows[0].user_pw;
+                var user_id = rows[0].user_id;
                 var compare = bcrypt.compareSync(req.body.password,hash_pw);
                 if(compare === true){
                     const token = createToken(rows[0].user_id);
@@ -68,7 +70,7 @@ router.post('/login', (req, res) => {
                         })
                         conn.release();
                     })
-                    res.send([token,refreshtoken]);
+                    res.send([token,refreshtoken,user_id]);
                 }else{
                     res.send('1'); //비밀번호가 일치하지 않음
                 }

@@ -23,10 +23,10 @@ function PostUpload({setPostModalShow,postModalShow}) {
         e.preventDefault();
 
         const formData = new FormData();        
-        formData.append('post', postInput);
+        formData.append('content', postInput);
         formData.append('image',imageFile);
-
-        axios.post("http://localhost:8081/board/create",formData, {
+        formData.append('user_id',cookies.nickname);
+         axios.post("http://localhost:8081/board/create",formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
                 'Authorization' : cookies.x_auth

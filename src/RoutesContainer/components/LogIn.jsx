@@ -40,6 +40,7 @@ function LogIn({ history }) {
           console.log("인증성공", res);
           //엑세스토큰과 리프레쉬토큰 저장
           setCookie("x_auth", res.data[0], { maxAge: 1800 });
+          setCookie("nickname",res.data[2]);
           localStorage.setItem("r_x_auth", res.data[1]);
           history.push("/home");
         }
