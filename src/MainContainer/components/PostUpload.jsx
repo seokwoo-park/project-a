@@ -2,27 +2,50 @@ import React ,{useState} from 'react'
 import '../css/PostUpload.css';
 import {Button,Modal} from 'react-bootstrap';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import axios from "axios";
+import { useCookies } from 'react-cookie';
+
 
 function PostUpload({setPostModalShow,postModalShow}) {
+    const handleClose = () => setPostModalShow(false);    
 
     const [postInput,setPostInput] = useState('');
     
+    const [imageFile,setImageFile] = useState('');
     const [imageView, setImageView] = useState('');
     const [imgStyle, setImgStyle] = useState({});
 
-    const handleClose = () => setPostModalShow(false);    
-
+    const[cookies,] = useCookies();
+    
+    
+    
     function onSubmitHandler(e) {
         e.preventDefault();
-        console.log('submit')
-        //아직 기능구현 못하였음
+
+        const formData = new FormData();        
+        formData.append('post', postInput);
+        formData.append('image',imageFile);
+
+        axios.post("http://localhost:8081/board/create",formData, {
+            headers: {
+                'Content-Type' : 'multipart/form-data',
+                'Authorization' : cookies.x_auth
+            }
+        }).then((res)=>{
+            //응답처리
+            console.log('포스팅 완료')
+        }).catch((res)=>{
+            console.log('에러')
+            //예외 처리
+        })
     }
 
     function onFileChange (e) {
       if(e.target.files[0]) {
+        setImageFile(e.target.files[0]);
         setImageView(URL.createObjectURL(e.target.files[0]))
-        setImgStyle({height:"102px" ,objectFit: "contain" });
         
+        setImgStyle({objectFit: "contain", width: "100px"});
       } else {
           return false
       }
@@ -71,7 +94,7 @@ function PostUpload({setPostModalShow,postModalShow}) {
                     <Button variant="secondary" onClick={handleClose}>
                     Close
                     </Button>
-                    <Button variant="primary" onClick={onSubmitHandler} type="submit">Submit</Button>
+                    <Button variant="primary" onClick={onSubmitHandler} type="submit">Post</Button>
                 </Modal.Footer>
             </Modal>
         </div>
