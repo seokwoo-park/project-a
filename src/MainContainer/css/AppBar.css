@@ -1,18 +1,44 @@
-.appBar {
-    color: rgb(50, 167, 89);
-    border-bottom: 1px solid rgb(197, 193, 193);
-    margin-top: 20px;
-    padding-bottom: 20px;
+.appbar {
+  height: 108px;
+  border-bottom: 1px solid #707070;
 }
 
-.appBar_container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1000px;
-    margin: auto;
+.header-container {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 936px;
+
+  display: flex;
+  align-items: center;
 }
 
-.appBar_menu {
-    display: flex;
-    align-items: center;
+.header-container h1 {
+  margin-right: 30px;
+}
+
+.search-form {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.search-form input {
+  width: 215px;
+  padding: 0 5px;
+  border: none;
+  outline: none;
+  border: 1px solid #707070;
+  border-radius: 4px;
+}
+
+.search_logo {
+  background: url("../images/search-icon.png") no-repeat;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
 }
