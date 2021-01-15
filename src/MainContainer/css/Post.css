@@ -6,11 +6,14 @@
     align-items: flex-start;
     width: 298px;
     height: 450px;
-    margin: 10px;
+    margin: 10px 0;
     border: 1px solid #707070;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
+}
+.post-container:nth-child(3n + 1) {
+    margin: 10px 20px;
 }
 
 .post-img {

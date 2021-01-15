@@ -22,7 +22,7 @@ function PostUpload () {
 
         const formData = new FormData();        
         formData.append('content', postInput);
-        formData.append('image',imageView);
+        formData.append('image',imageFile);
         formData.append('user_id',cookies.nickname);
         await axios.post("http://localhost:8081/board/create",formData, {
             headers: {
@@ -45,8 +45,6 @@ function PostUpload () {
     function onFileChange (e) {
       if(e.target.files[0]) {
         setImageFile(e.target.files[0]);
-        // console.log(URL.createObjectURL(e.target.files[0]));
-        // console.log(e.target.files[0]);
         setImageView(URL.createObjectURL(e.target.files[0]))
         
         setImgStyle({objectFit: "contain", width: "100px"});
@@ -90,3 +88,4 @@ function PostUpload () {
 }
 
 export default PostUpload
+

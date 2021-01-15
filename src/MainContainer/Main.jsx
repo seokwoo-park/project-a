@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Post from "./components/Post";
 import PostUpload from "./components/PostUpload";
+import UserInfo from "./components/UserInfo";
+
 import "./css/Main.css";
 
 function Main() {
@@ -23,27 +25,22 @@ function Main() {
   if (list === null) return null;
 
   return (
-    <div className="main">
-
-      <PostUpload/>
-
-      <section className="content-section">
-        {list.map((data) => {
-          return (
-            <Post
-              key={data.idx}
-              id={data.user_id}
-              title={data.user_id}
-              content={data.content}
-              src={data.imge}
-              date={data.created}
-            />
-          );
-        })}
-
-      </section>
-    </div>
-
+    <section className="content-section">
+      <PostUpload />
+      <UserInfo />
+      {list.map((data) => {
+        return (
+          <Post
+            key={data.idx}
+            id={data.user_id}
+            title={data.user_id}
+            content={data.content}
+            src={data.imge}
+            date={data.created}
+          />
+        );
+      })}
+    </section>
   );
 }
 
