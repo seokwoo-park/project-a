@@ -16,29 +16,26 @@ function PostUpload({setPostModalShow,postModalShow}) {
     const [imgStyle, setImgStyle] = useState({});
 
     const[cookies,] = useCookies();
-
     
     
-    async function onSubmitHandler(e) {
+    
+    function onSubmitHandler(e) {
         e.preventDefault();
 
         const formData = new FormData();        
         formData.append('content', postInput);
         formData.append('image',imageFile);
         formData.append('user_id',cookies.nickname);
-         await axios.post("http://localhost:8081/board/create",formData, {
+         axios.post("http://localhost:8081/board/create",formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data',
                 'Authorization' : cookies.x_auth
             }
         }).then((res)=>{
-            setPostModalShow(false);
             //응답처리
-            console.log('포스팅 완료');
-            console.log(res);
+            console.log('포스팅 완료')
         }).catch((res)=>{
-            console.log('에러');
-            console.log(res);
+            console.log('에러')
             //예외 처리
         })
     }
