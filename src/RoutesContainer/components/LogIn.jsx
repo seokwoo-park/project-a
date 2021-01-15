@@ -1,10 +1,17 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { TextField, Button } from "@material-ui/core";
 import "../css/LogIn.css";
 import { useCookies } from "react-cookie";
+import Loader from "../../components/Loader";
+import {isLoadingContext} from '../../components/Routes';
+
+
 
 function LogIn({ history }) {
+
+  const {isLoading,setIsLoading} = useContext(isLoadingContext);
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -21,8 +28,9 @@ function LogIn({ history }) {
     });
   }
 
-  const onSubmitHandler = async (e) => {
+    const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     await axios
       .post("http://localhost:8081/user/login", {
         email,
@@ -44,12 +52,16 @@ function LogIn({ history }) {
           localStorage.setItem("r_x_auth", res.data[1]);
           history.push("/home");
         }
-      });
+      }).catch((error=>{
+        setIsLoading(false);
+      }))
   };
 
   return (
     <div className="logIn">
+      {isLoading ? <Loader isLoading={isLoading}/> : null}
       <h1>Yaja tree</h1>
+      
       <form className="form_container logIn_form" onSubmit={onSubmitHandler}>
         <h2>LOG IN</h2>
         <TextField
