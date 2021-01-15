@@ -14,7 +14,7 @@ function Routes() {
       {cookies.x_auth !== undefined ? (
         <Redirect to="/home" />
       ) : (
-        <Redirect to="/" />
+        <Redirect to="/home" />
       )}
       <Switch>
         <Route exact path="/" component={Auth} />
