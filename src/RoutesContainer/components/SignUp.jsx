@@ -1,14 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { TextField, Button } from "@material-ui/core";
 import "../css/SignUp.css";
-import Loader from "../../components/Loader";
-import {isLoadingContext} from '../../components/Routes';
 
 function SignUp({ history }) {
-
-  const {isLoading,setIsLoading} = useContext(isLoadingContext);
-
   const [userData, setUserData] = useState({
     nickName: "",
     email: "",
@@ -26,7 +21,7 @@ function SignUp({ history }) {
     });
   }
 
-  async function onSubmitHandler(e) {
+  function onSubmitHandler(e) {
     e.preventDefault();
     // 패스워드 확인
     if (passwordCheck !== password) {
@@ -36,8 +31,8 @@ function SignUp({ history }) {
       alert("Passwords must be over 6 digit!");
       return false;
     }
-    setIsLoading(true);
-    await axios
+
+    axios
       .post("http://localhost:8081/user/register", { ...userData })
       .then((result) => {
         history.push("/login");
@@ -51,17 +46,12 @@ function SignUp({ history }) {
           password: "",
           passwordCheck: "",
         });
-        setIsLoading(false);
       });
   }
 
   return (
     <div className="signUp">
       <h1>Welcome to Yaja Tree </h1>
-      {isLoading ? <Loader isLoading={isLoading}/> : null}
-
-      {console.log(useContext(isLoadingContext))}
-
       <div>
         <form className="form_container" onSubmit={onSubmitHandler}>
           <h2>SIGN UP</h2>
