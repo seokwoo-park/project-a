@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Post from "./components/Post";
+import WriteForm from "./components/WriteForm";
+import UserInfo from "./components/UserInfo";
+
 import "./css/Main.css";
 
 function Main() {
@@ -23,6 +26,8 @@ function Main() {
 
   return (
     <section className="content-section">
+      <WriteForm />
+      <UserInfo />
       {list.map((data) => {
         return (
           <Post
