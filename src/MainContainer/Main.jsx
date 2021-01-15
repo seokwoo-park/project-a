@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Post from "./components/Post";
+import PostUpload from "./components/PostUpload";
 import "./css/Main.css";
 
 function Main() {
@@ -17,25 +18,32 @@ function Main() {
 
   useEffect(() => {
     getList();
-  }, []);
+  },[]);
 
   if (list === null) return null;
 
   return (
-    <section className="content-section">
-      {list.map((data) => {
-        return (
-          <Post
-            key={data.idx}
-            id={data.user_id}
-            title={data.user_id}
-            content={data.content}
-            src={data.imge}
-            date={data.created}
-          />
-        );
-      })}
-    </section>
+    <div className="main">
+
+      <PostUpload/>
+
+      <section className="content-section">
+        {list.map((data) => {
+          return (
+            <Post
+              key={data.idx}
+              id={data.user_id}
+              title={data.user_id}
+              content={data.content}
+              src={data.imge}
+              date={data.created}
+            />
+          );
+        })}
+
+      </section>
+    </div>
+
   );
 }
 

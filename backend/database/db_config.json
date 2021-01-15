@@ -1,7 +1,7 @@
 {
     "host" : "localhost",
-    "user" : "bloger",
-    "password" : "1111",
-    "database" : "blog_db",
+    "user" : "root",
+    "password" : "1234",
+    "database" : "project_a_db",
     "connectionLimit" : 20
 }

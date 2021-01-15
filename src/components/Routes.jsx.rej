@@ -1,0 +1,9 @@
+diff a/src/components/Routes.jsx b/src/components/Routes.jsx	(rejected hunks)
+@@ -7,7 +7,6 @@
+ import { useCookies } from "react-cookie";
+ 
+ function Routes() {
+-  const [isLoading, setIsLoading] = useState(false);
+   const [cookies] = useCookies(["x_auth"]);
+ 
+   return (
