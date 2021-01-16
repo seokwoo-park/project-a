@@ -4,7 +4,6 @@ import AppBar from "../../MainContainer/components/AppBar.jsx";
 import '../css/Home.css';
 
 function Home() {
-  console.log("Home page");
   return (
     <div className="home">
       <AppBar/>

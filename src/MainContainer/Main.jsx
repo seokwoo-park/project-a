@@ -20,16 +20,18 @@ function Main() {
 
   useEffect(() => {
     getList();
-  }, []);
+    console.log('렌더링됐습니다.')
+  },[]);
 
   if (list === null) return null;
   return (
     <section className="content-section">
-      <PostUpload />
+      <PostUpload/>
       <UserInfo />
-      {list.map((data) => {
+      {list.reverse().map((data) => {
         return (
           <Post
+            isPosted
             key={data.idx}
             id={data.user_id}
             title={data.user_id}

@@ -12,6 +12,8 @@ function Post({
   date,
 }) {
 
+  
+
   //404 error
   const onError = (e) => {
     console.log("경로 에러!!");
@@ -41,8 +43,8 @@ function Post({
         <h2 className="post-title">{title}</h2>
         <p className="post-content">{content}</p>
         <div className="post-tags">
-          {tag.map((item) => (
-            <span className="tag-item">#{item} </span>
+          {tag.map((item,i) => (
+            <span key={i} className="tag-item">#{item} </span>
           ))}
         </div>
         <div className="post-date">
