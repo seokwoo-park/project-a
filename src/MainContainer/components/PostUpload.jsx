@@ -1,91 +1,99 @@
-import React ,{useState} from 'react'
-import '../css/PostUpload.css';
-import {Button,Modal} from 'react-bootstrap';
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import React, { useState } from "react";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import axios from "axios";
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
+import "../css/PostUpload.css";
 
+function PostUpload() {
+  const [postInput, setPostInput] = useState("");
 
-function PostUpload () {
-    const [postInput,setPostInput] = useState('');
-    
-    const [imageFile,setImageFile] = useState('');
-    const [imageView, setImageView] = useState('');
-    const [imgStyle, setImgStyle] = useState({});
+  const [imageFile, setImageFile] = useState("");
+  const [imageView, setImageView] = useState("");
+  const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
 
-    const[cookies,] = useCookies();
+  const [cookies] = useCookies();
 
-    
-    
-    async function onSubmitHandler(e) {
-        e.preventDefault();
+  async function onSubmitHandler(e) {
+    e.preventDefault();
 
-        const formData = new FormData();        
-        formData.append('content', postInput);
-        formData.append('image',imageFile);
-        formData.append('user_id',cookies.nickname);
-        await axios.post("http://localhost:8081/board/create",formData, {
-            headers: {
-                'Content-Type' : 'multipart/form-data',
-                'Authorization' : cookies.x_auth
-            }
-        })
-        .then((res)=>{
-            setPostInput("");
-            //응답처리
-            console.log('포스팅 완료');
-            console.log(res);
-        }).catch((res)=>{
-            console.log('에러');
-            console.log(res);
-            //예외 처리
-        })
+    const formData = new FormData();
+    formData.append("content", postInput);
+    formData.append("image", imageFile);
+    formData.append("user_id", cookies.nickname);
+    await axios
+      .post("http://localhost:8081/board/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: cookies.x_auth,
+        },
+      })
+      .then((res) => {
+        if (res !== 1) {
+          setPostInput("");
+          //응답처리
+          console.log("포스팅 완료");
+        }
+      })
+      .catch((res) => {
+        console.log("에러");
+        console.log(res);
+        //예외 처리
+      });
+  }
+
+  function onFileChange(e) {
+    if (e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+      setImageView(URL.createObjectURL(e.target.files[0]));
+      setImgStyle({ objectFit: "contain", width: "100px" });
+    } else {
+      return;
     }
+  }
 
-    function onFileChange (e) {
-      if(e.target.files[0]) {
-        setImageFile(e.target.files[0]);
-        setImageView(URL.createObjectURL(e.target.files[0]))
-        
-        setImgStyle({objectFit: "contain", width: "100px"});
-      } else {
-          return false
-      }
-    }
+  return (
+    <div className="postUpload">
+      <form className="postUpload_form" onSubmit={onSubmitHandler}>
+        <textarea
+          className="postUpload_text"
+          required
+          maxLength={200}
+          onChange={(e) => {
+            setPostInput(e.target.value);
+          }}
+          type="text"
+          rows={5}
+          cols={50}
+          value={postInput}
+          placeholder="What's on your mind ?"
+        />
 
+        <div className="postUpload_form_files">
+          <label htmlFor="files">
+            <AddAPhotoIcon />
+            Photo
+          </label>
+          <input
+            id="files"
+            onChange={onFileChange}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+          />
 
-    return (
-
-        <div className="postUpload">
-            <form className="postUpload_form" onSubmit={onSubmitHandler}>
-                <textarea required
-                className="postUpload_text" 
-                maxLength={200}
-                onChange={(e)=>{setPostInput(e.target.value)}}
-                type="text"
-                rows={5} 
-                cols={50}
-                value={postInput} 
-                placeholder="What's on your mind ?"/>
-            </form>
-
-            <div className="postUpload_form_files">
-                <label htmlFor="files"> <AddAPhotoIcon/>Photo </label>
-                <input id="files"
-                onChange={onFileChange} 
-                type="file" 
-                accept="image/*" 
-                style={{display:"none"}}/>
-
-                <img className="img_preview" src={imageView} style={imgStyle}/>
-                <Button className="postUpload_btn" variant="primary" onClick={onSubmitHandler} type="submit">Post</Button>
-            </div>
+          <img
+            className="img_preview"
+            src={imageView}
+            style={imgStyle}
+            alt="img preview area"
+          />
+          <button className="postUpload_btn" type="submit">
+            POST
+          </button>
         </div>
-
-
-        
-    )
+      </form>
+    </div>
+  );
 }
 
-export default PostUpload
-
+export default PostUpload;
