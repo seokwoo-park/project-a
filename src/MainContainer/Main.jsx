@@ -20,10 +20,10 @@ function Main() {
 
   useEffect(() => {
     getList();
-  },[]);
+  }, []);
 
   if (list === null) return null;
-
+  console.log(list);
   return (
     <section className="content-section">
       <PostUpload />
@@ -35,8 +35,10 @@ function Main() {
             id={data.user_id}
             title={data.user_id}
             content={data.content}
-            src={data.imge}
+            image={data.image}
+            tag={["react", "javascript", "node"]}
             date={data.created}
+            profile={data.profile}
           />
         );
       })}
