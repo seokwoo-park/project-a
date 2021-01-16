@@ -23,7 +23,6 @@ function Main() {
   }, []);
 
   if (list === null) return null;
-  console.log(list);
   return (
     <section className="content-section">
       <PostUpload />

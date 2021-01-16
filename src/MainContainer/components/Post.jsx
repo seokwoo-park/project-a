@@ -1,37 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import "../css/Post.css";
 import defaultImage from "../images/defaultImage.png";
 import defaultProfile from "../images/defaultProfile.png";
 
 function Post({
-  image = defaultImage,
-  profile = defaultProfile,
+  image,
+  profile,
   title,
   content,
   tag,
   date,
 }) {
-  //null check
-  const ifPostImgisNull = (props) =>
-    props === null ? (props = defaultImage) : props;
-  const ifProfileisNull = (props) =>
-    props === null ? (props = defaultProfile) : props;
-
-  const [imgsrc, setImgsrc] = useState({
-    postImage: ifPostImgisNull(image),
-    profileImage: ifProfileisNull(profile),
-  });
-
-  const { postImage, profileImage } = imgsrc;
 
   //404 error
   const onError = (e) => {
     console.log("경로 에러!!");
-    const { name } = e.target;
-    setImgsrc({
-      ...imgsrc,
-      [name]: defaultImage,
-    });
+    const { name,src } = e.target;
+    name==="profileImage"? 
+    src=defaultProfile
+    :src=defaultImage
   };
 
   return (
@@ -39,16 +26,16 @@ function Post({
       <img
         className="post-img"
         name="postImage"
-        src={postImage}
-        alt=""
+        src={image? image: defaultImage}
+        alt="postImage"
         onError={onError}
       />
       <div className="post-wrap">
         <img
           className="profile-img"
           name="profileImage"
-          src={profileImage}
-          alt=""
+          src={profile? profile: defaultProfile}
+          alt="profileImage"
           onError={onError}
         />
         <h2 className="post-title">{title}</h2>
