@@ -15,6 +15,7 @@ function Main() {
   const [scrollPage,setScrollPage] = useState(9);
   const [morePost,setMorePost] = useState(true);
 
+
   
   const getList = async () => {
     try {
@@ -42,7 +43,7 @@ function Main() {
 
   return (
     <section className="content-section">
-      <PostUpload />
+      <PostUpload/>
       <UserInfo />
 
       <InfiniteScroll 
@@ -50,7 +51,7 @@ function Main() {
       hasMore={morePost}
       next={()=>{setTimeout(()=>setScrollPage(scrollPage+6),1000)}}
       loader={<p className="content-loading">Loading <AutorenewIcon/></p>}
-      endMessage={<p className="content-loading">You have seen it all the posts <SpeakerNotesOffIcon/> </p>}
+      endMessage={<p className="content-loading">You have seen all the posts <SpeakerNotesOffIcon/> </p>}
       className="content-section"
       >
         {list.map((data) => {

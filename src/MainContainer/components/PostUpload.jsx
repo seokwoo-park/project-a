@@ -34,6 +34,7 @@ function PostUpload() {
         //예외 처리
       });
       setPostInput("");
+      window.location.reload();
   }
 
   function onFileChange(e) {
