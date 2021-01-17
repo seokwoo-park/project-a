@@ -4,7 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../css/PostUpload.css";
 
-function PostUpload() {
+function PostUpload({setIsPosted}) {
   const [postInput, setPostInput] = useState("");
 
   const [imageFile, setImageFile] = useState("");
@@ -34,6 +34,7 @@ function PostUpload() {
         //예외 처리
       });
       setPostInput("");
+      setIsPosted(true)
       console.log("전송완료")
   }
 
