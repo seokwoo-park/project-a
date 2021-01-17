@@ -5,6 +5,10 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.content-section > .content-loading {
+    flex: 1 0 100%;
+}
 .write-form {
     display: inline-block;
     width: 617px;
@@ -33,4 +37,14 @@
     color: white;
     margin: 10px auto;
     border-style: none;
+}
+
+.content-loading {
+    text-align: center;
+    margin: auto;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(38, 170, 163, 0.16);
 }
