@@ -22,11 +22,7 @@ function Main() {
       const res = await axios.get("http://localhost:8081/board/list");
       let result = res.data.reverse().slice(0, scrollPage)
       setList([...result]);
-
-      const equalCheck = _.isEqual(res.data.slice(-1)[0],list.slice(-1)[0])
-      if (equalCheck) {
-        setMorePost(false)
-      }
+      if (res.data.length === list.length){setMorePost(false)}
 
     } catch (error) {
       throw new Error("cannot response", error);
@@ -43,7 +39,7 @@ function Main() {
 
   return (
     <section className="content-section">
-      <PostUpload/>
+      <PostUpload getList={getList}/>
       <UserInfo />
 
       <InfiniteScroll 

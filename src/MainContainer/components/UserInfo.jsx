@@ -15,10 +15,11 @@ function UserInfo() {
   const [myself, setMyself] = useState(
     "나를 한줄로 표현하자면 어떻게 표현할것인가요? 여기에는 그런 글귀가 들어가는 자리"
   );
-  const [, , removeCookie] = useCookies(["x_auth"]);
+  const [cookies, , removeCookie] = useCookies(["x_auth"]);
   const myselfEl = useRef();
   const onClickHandler = () => {
     removeCookie("x_auth");
+    removeCookie("nickname");
   };
 
   const onChange = (e) => {
@@ -29,7 +30,7 @@ function UserInfo() {
     <div className="user-info">
       <img className="userImage" src={defaultUserImage} alt="profile image" />
       <div className="user-detail">
-        <div className="nickname">koo님</div>
+        <div className="nickname">{cookies.nickname}</div>
         <LogoutIcon className="logout-icon" onClick={onClickHandler} />
       </div>
       <div className="icon-box">
