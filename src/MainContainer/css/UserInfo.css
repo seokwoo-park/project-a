@@ -1,0 +1,75 @@
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  /* justify-content: space-evenly; */
+}
+
+.userImage {
+  margin-bottom: 5px;
+  width: 60px;
+  height: 60px;
+}
+
+.nickname {
+  margin-right: 5px;
+  display: inline-block;
+  font-size: 12px;
+  color: #7b7b7b;
+}
+
+.logout-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  color: #7b7b7b;
+  cursor: pointer;
+}
+
+.logout-icon:hover {
+  color: black;
+}
+
+.icon-box {
+  margin-top: 5px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 7.5px;
+  cursor: pointer;
+  color: #7b7b7b;
+  transition: color 0.25s;
+}
+
+.icon:hover {
+  color: black;
+}
+.heart-icon:hover {
+  color: #d92323;
+}
+
+.introduce-myself {
+  border: none;
+  outline: none;
+
+  margin-top: 20px;
+  display: inline-block;
+  width: 226px;
+  height: 35px;
+  font-size: 12px;
+  color: #7b7b7b;
+  overflow: hidden;
+  resize: none;
+}
+
+.introduce-myself:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.introduce-myself:focus {
+  text-decoration: underline;
+  cursor: text;
+}

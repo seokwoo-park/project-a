@@ -10,7 +10,7 @@ export const isLoadingContext = React.createContext();
 
 function Routes() {
   const [isLoading, setIsLoading] = useState(false);
-  const isLoadingvalue = {isLoading, setIsLoading};
+  const isLoadingvalue = { isLoading, setIsLoading };
 
   const [cookies] = useCookies(["x_auth"]);
 
@@ -20,9 +20,9 @@ function Routes() {
         {cookies.x_auth !== undefined ? (
           <Redirect to="/home" />
         ) : (
-          <Redirect to="/"/>
+          <Redirect to="/home" />
         )}
-        
+
         <Switch>
           <Route exact path="/" component={Auth} />
           <Route path="/home" component={Home} />
