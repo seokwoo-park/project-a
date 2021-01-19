@@ -4,7 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../css/PostUpload.css";
 
-function PostUpload() {
+function PostUpload({ getList }) {
   const [postInput, setPostInput] = useState("");
 
   const [imageFile, setImageFile] = useState("");
@@ -13,7 +13,7 @@ function PostUpload() {
 
   const [cookies] = useCookies();
 
-    function onSubmitHandler(e) {
+  function onSubmitHandler(e) {
     e.preventDefault();
 
     const formData = new FormData();
@@ -33,8 +33,11 @@ function PostUpload() {
         console.log(res);
         //예외 처리
       });
-      setPostInput("");
-      window.location.reload();
+    setPostInput("");
+    setTimeout(() => {
+      getList();
+    }, 300);
+    // window.location.reload();
   }
 
   function onFileChange(e) {
