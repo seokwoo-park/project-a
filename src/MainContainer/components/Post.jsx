@@ -1,9 +1,14 @@
+import axios from "axios";
 import React from "react";
 import "../css/Post.css";
 import defaultImage from "../images/defaultImage.png";
 import defaultProfile from "../images/defaultProfile.png";
 
 function Post({ image, profile, title, content, tag, date }) {
+  const onDelete = async (idx) => {
+    await axios.post(`http://localhost:8081/board/delete/${idx}`);
+  };
+
   //404 error
   const onError = (e) => {
     console.log("경로 에러!!");

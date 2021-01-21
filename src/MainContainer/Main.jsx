@@ -7,7 +7,6 @@ import "./css/Main.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SpeakerNotesOffIcon from "@material-ui/icons/SpeakerNotesOff";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
-import * as _ from "lodash";
 
 function Main() {
   const [list, setList] = useState([]);
@@ -15,7 +14,6 @@ function Main() {
   const [morePost, setMorePost] = useState(true);
   const getList = async () => {
     try {
-      console.log("getList()");
       const res = await axios.get("http://localhost:8081/board/list");
       let result = res.data.reverse().slice(0, scrollPage);
       setList([...result]);
@@ -28,9 +26,8 @@ function Main() {
   };
 
   useEffect(() => {
-    console.log("useEffect()");
     getList();
-  }, []);
+  }, [scrollPage]);
 
   if (list === null) return null;
 
@@ -38,20 +35,39 @@ function Main() {
     <section className="content-section">
       <PostUpload getList={getList} />
       <UserInfo />
-      {list.map((data) => {
-        return (
-          <Post
-            key={data.idx}
-            id={data.user_id}
-            title={data.user_id}
-            content={data.content}
-            image={data.image}
-            tag={["react", "javascript", "node"]}
-            date={data.created}
-            profile={data.profile}
-          />
-        );
-      })}
+      <InfiniteScroll
+        dataLength={list.length}
+        hasMore={morePost}
+        next={() => {
+          setTimeout(() => setScrollPage(scrollPage + 6), 1000);
+        }}
+        loader={
+          <p className="content-loading">
+            Loading <AutorenewIcon />
+          </p>
+        }
+        endMessage={
+          <p className="content-loading">
+            You have seen all the posts <SpeakerNotesOffIcon />{" "}
+          </p>
+        }
+        className="content-section"
+      >
+        {list.map((data) => {
+          return (
+            <Post
+              key={data.idx}
+              id={data.user_id}
+              title={data.user_id}
+              content={data.content}
+              image={data.image}
+              tag={["react", "javascript", "node"]}
+              date={data.created}
+              profile={data.profile}
+            />
+          );
+        })}
+      </InfiniteScroll>
     </section>
   );
 }

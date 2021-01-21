@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -10,12 +10,9 @@ function PostUpload({ getList }) {
   const [imageFile, setImageFile] = useState("");
   const [imageView, setImageView] = useState("");
   const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
-
   const [cookies] = useCookies();
 
-  const nextNumber = useRef(1);
-
-  function onSubmitHandler(e) {
+  const createPost = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -23,7 +20,7 @@ function PostUpload({ getList }) {
     formData.append("image", imageFile);
     formData.append("user_id", cookies.nickname);
 
-    axios
+    await axios
       .post("http://localhost:8081/board/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -36,27 +33,11 @@ function PostUpload({ getList }) {
         //예외 처리
       });
     setPostInput("");
-    setTimeout(() => {
-      getList();
-    }, 300);
-    // window.location.reload();
-  }
 
-  const createPost = async () => {
-    const res = await axios.post("http://localhost:8081/board/create", {
-      user_id: cookies.nickname,
-      content: `test${nextNumber.current}`,
-      image: null,
-    });
-    if (res.status === 204) {
-      console.log("status 204!");
-      nextNumber.current += 1;
-
-      getList();
-    }
+    getList();
   };
 
-  function onFileChange(e) {
+  const onFileChange = (e) => {
     if (e.target.files[0]) {
       setImageFile(e.target.files[0]);
       setImageView(URL.createObjectURL(e.target.files[0]));
@@ -64,11 +45,11 @@ function PostUpload({ getList }) {
     } else {
       return;
     }
-  }
+  };
 
   return (
     <div className="postUpload">
-      <form className="postUpload_form" onSubmit={onSubmitHandler}>
+      <form className="postUpload_form" onSubmit={createPost}>
         <textarea
           className="postUpload_text"
           required
@@ -104,12 +85,6 @@ function PostUpload({ getList }) {
           />
           <button className="postUpload_btn" type="submit">
             POST
-          </button>
-          <button className="postUpload_btn" onClick={getList}>
-            RELOAD
-          </button>
-          <button className="postUpload_btn" onClick={createPost}>
-            CREATEPOST
           </button>
         </div>
       </form>
