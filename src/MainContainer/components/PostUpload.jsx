@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -12,6 +12,8 @@ function PostUpload({ getList }) {
   const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
 
   const [cookies] = useCookies();
+
+  const nextNumber = useRef(1);
 
   function onSubmitHandler(e) {
     e.preventDefault();
@@ -39,6 +41,20 @@ function PostUpload({ getList }) {
     }, 300);
     // window.location.reload();
   }
+
+  const createPost = async () => {
+    const res = await axios.post("http://localhost:8081/board/create", {
+      user_id: cookies.nickname,
+      content: `test${nextNumber.current}`,
+      image: null,
+    });
+    if (res.status === 204) {
+      console.log("status 204!");
+      nextNumber.current += 1;
+
+      getList();
+    }
+  };
 
   function onFileChange(e) {
     if (e.target.files[0]) {
@@ -88,6 +104,12 @@ function PostUpload({ getList }) {
           />
           <button className="postUpload_btn" type="submit">
             POST
+          </button>
+          <button className="postUpload_btn" onClick={getList}>
+            RELOAD
+          </button>
+          <button className="postUpload_btn" onClick={createPost}>
+            CREATEPOST
           </button>
         </div>
       </form>

@@ -1,7 +1,7 @@
 {
     "host" : "localhost",
     "user" : "root",
-    "password" : "1234",
-    "database" : "project_a_db",
+    "password" : "root",
+    "database" : "testdb",
     "connectionLimit" : 20
 }
