@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import defaultUserImage from "../images/defaultUserInfo.svg";
 import {
@@ -12,6 +12,9 @@ import {
 import "../css/UserInfo.css";
 
 function UserInfo() {
+  useEffect(() => {
+    console.log("userInfo render!");
+  }, []);
   const [myself, setMyself] = useState(
     "나를 한줄로 표현하자면 어떻게 표현할것인가요? 여기에는 그런 글귀가 들어가는 자리"
   );

@@ -4,16 +4,15 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../css/PostUpload.css";
 
-function PostUpload() {
+function PostUpload({ getList }) {
   const [postInput, setPostInput] = useState("");
 
   const [imageFile, setImageFile] = useState("");
   const [imageView, setImageView] = useState("");
   const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
-
   const [cookies] = useCookies();
 
-    function onSubmitHandler(e) {
+  const createPost = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -21,7 +20,7 @@ function PostUpload() {
     formData.append("image", imageFile);
     formData.append("user_id", cookies.nickname);
 
-    axios
+    await axios
       .post("http://localhost:8081/board/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -33,11 +32,12 @@ function PostUpload() {
         console.log(res);
         //예외 처리
       });
-      setPostInput("");
-      window.location.reload();
-  }
+    setPostInput("");
 
-  function onFileChange(e) {
+    getList();
+  };
+
+  const onFileChange = (e) => {
     if (e.target.files[0]) {
       setImageFile(e.target.files[0]);
       setImageView(URL.createObjectURL(e.target.files[0]));
@@ -45,11 +45,11 @@ function PostUpload() {
     } else {
       return;
     }
-  }
+  };
 
   return (
     <div className="postUpload">
-      <form className="postUpload_form" onSubmit={onSubmitHandler}>
+      <form className="postUpload_form" onSubmit={createPost}>
         <textarea
           className="postUpload_text"
           required
