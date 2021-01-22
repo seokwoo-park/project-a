@@ -1,12 +1,22 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import "../css/Post.css";
 import defaultImage from "../images/defaultImage.png";
 import defaultProfile from "../images/defaultProfile.png";
+import { useCookies } from "react-cookie";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-function Post({ image, profile, title, content, tag, date }) {
+function Post({getList,idx, image, profile, title, content, tag, date }) {
+
+  const [postMenu,setPostMenu] = useState(false);
+  const menuToggle = () => {setPostMenu(!postMenu)}
+  const [cookies] = useCookies();
+
+
   const onDelete = async (idx) => {
-    await axios.post(`http://localhost:8081/board/delete/${idx}`);
+    await axios.post(`http://localhost:8081/board/delete`,{idx:idx})
+    .then((res)=>{console.log(res,'deleted')})
+    .then(()=>{getList()})
   };
 
   //404 error
@@ -41,6 +51,18 @@ function Post({ image, profile, title, content, tag, date }) {
           alt="profileImage"
           onError={onError}
         />
+        <MoreVertIcon className="post-menu" onClick={menuToggle}/>
+        {postMenu? 
+          <div className="post-menu-list">
+            <ul>
+              <li>Edit Post</li>
+              {title === cookies.nickname
+              ?<li onClick={()=>onDelete(idx)}>Delete Post</li> 
+              : null}
+            </ul>
+          </div>
+        : null
+        }
         <h2 className="post-title">{title}</h2>
         <p className="post-content">{content}</p>
         <div className="post-tags">

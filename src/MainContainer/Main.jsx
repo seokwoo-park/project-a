@@ -30,6 +30,7 @@ function Main() {
   }, [scrollPage]);
 
   if (list === null) return null;
+  console.log(list);
 
   return (
     <section className="content-section">
@@ -56,6 +57,8 @@ function Main() {
         {list.map((data) => {
           return (
             <Post
+              getList={getList}
+              idx={data.idx}
               key={data.idx}
               id={data.user_id}
               title={data.user_id}
