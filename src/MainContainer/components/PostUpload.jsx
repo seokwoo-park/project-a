@@ -23,8 +23,7 @@ function PostUpload({ getList }) {
     await axios
       .post("http://localhost:8081/board/create", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: cookies.x_auth,
+          x_auth: cookies.x_auth,
         },
       })
       .catch((res) => {

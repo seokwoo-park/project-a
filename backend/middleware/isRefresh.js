@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const secretKey = process.env.ACCESS_SECRET_KEY;
 const R_secretKey = process.env.REFRESH_SECRET_KEY;
-const db = require('../lib/db');
+const db = require('../database/db');
 
 const createToken = (user) => {
     const token = jwt.sign({nickName : user.toString()},secretKey,{
@@ -25,6 +25,20 @@ module.exports = async(req,res,next) => {
        var data = [decodedToken.nickName,refreshtoken];
       
        let sql = 'select * from side_project_user where user_id = ? and refreshtoken = ?';
+       
+       db((err, conn) => {
+           if(err) console.log(err);
+           conn.query(sql,data,(err,rows) => {
+               if(err)console.log(err);
+               if(!rows){
+                   return false;
+               }
+               const newToken = createToken(rows[0].id);
+               res.send([newToken]); 
+           })
+       })
+
+       /*
        db.query(sql,data,(err,rows) => {
            if(err)console.log(err);
            if(!rows){
@@ -35,7 +49,7 @@ module.exports = async(req,res,next) => {
             res.send([newToken]);
            }
        })
-       
+       */
     }catch(err){
         next(err);
     }

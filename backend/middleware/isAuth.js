@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const secretKey = process.env.ACCESS_SECRET_KEY ;
-const db = require('../lib/db');
+const db = require('../database/db');
 
 module.exports = async (req,res,next) => {
     try{
@@ -13,10 +13,16 @@ module.exports = async (req,res,next) => {
         const {nickName} = decodedToken;
         var data = [nickName]
         let sql = 'select * from side_project_user where user_id = ?';
-        db.query(sql,data, (err,rows) => {
-            console.log(rows);
+        db((err,conn) => {
             if(err)console.log(err);
-        });
+            conn.query(sql,data, (err,rows) => {
+                if(err)console.log(err);
+                if(!rows){
+                    return false;
+                }
+            })
+            conn.release();
+        })
 
         next();
     }catch(err){
