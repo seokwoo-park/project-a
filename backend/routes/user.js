@@ -4,7 +4,13 @@ const router = express.Router();
 const db = require('../database/db.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const isRefresh = require('../middleware/isRefresh.js');
+const isAuth = require('../middleware/isAuth.js');
+const multer = require('multer');
 require('dotenv').config();
+const upload = multer({dest:'./upload'})
+
+router.use('/img',express.static('./upload'));
 
 const ACCESS_SECRET_KEY = process.env.ACCESS_SECRET_KEY;
 const REFRESH_SECRET_KEY = process.env.REFRESH_SECRET_KEY;
@@ -30,7 +36,7 @@ router.post('/register',(req,res) => {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(req.body.password, salt);
     var data = [req.body.nickName, hash, req.body.email];
-    let sql = 'insert into side_project_user(user_id,user_pw,email,refreshtoken) values(?,?,?,0)';
+    let sql = 'insert into side_project_user(user_id,user_pw,email,refreshtoken,profile,myself) values(?,?,?,0,NULL,NULL)';
 
     db((err, conn) => {
         if(err)console.log(err);
@@ -79,5 +85,48 @@ router.post('/login', (req, res) => {
         conn.release();
     })
 })
+
+//엑세스토큰 리프레쉬 요청
+router.get('/retoken', isRefresh);
+
+//본인정보 조회
+router.post('/myprofile', isAuth, (req,res) => {
+
+    var data = [req.body.idx];
+    let sql = 'select * from side_project_user where idx = ?';
+    
+    db((err,conn) => {
+        if(err) console.log(err);
+        conn.query(sql,data,(err,rows) => {
+            if(err) console.log(err);
+            if(!rows){
+                res.status(404);
+            }
+            res.send(rows);
+        })
+        conn.release();
+    })
+})
+
+
+//본인정보수정
+router.post('/updateprofile',isAuth, upload.single('image'), (req,res) => {
+    let profile = '/img/' + req.file.filename;
+    var data = [profile, req.body.myself, req.body.idx];
+    let sql = 'update side_project_user set profile = ?, myself = ? where idx = ?';
+
+    await db((err,conn) => {
+            if(err)console.log(err);
+            conn.query(sql,data,(err,rows) => {
+            if(err)console.log(err);
+            if(!rows){
+                res.send('1') // 오류
+            }
+            res.send('0')//성공
+        })
+        conn.release();
+    })
+})
+
 
 module.exports = router;

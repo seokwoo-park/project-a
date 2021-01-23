@@ -11,6 +11,11 @@ create table `side_project_user`(
     PRIMARY KEY(`idx`)
 );
 
+//프로필 추가
+
+alter table side_project_user add column profile varchar(1024);
+alter table side_project_user add column myself varchar(1024);
+
 //글관련 테이블
 
 create table `side_project_board`(
