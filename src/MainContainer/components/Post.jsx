@@ -4,19 +4,28 @@ import "../css/Post.css";
 import defaultImage from "../images/defaultImage.png";
 import defaultProfile from "../images/defaultProfile.png";
 import { useCookies } from "react-cookie";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import CommentOutlinedIcon from "@material-ui/icons/CommentOutlined";
+import PostMenu from "./PostMenu";
+import { Motion, spring } from "react-motion";
 
-function Post({getList,idx, image, profile, title, content, tag, date }) {
-
-  const [postMenu,setPostMenu] = useState(false);
-  const menuToggle = () => {setPostMenu(!postMenu)}
+function Post({ getList, idx, image, profile, title, content, tag, date }) {
+  const [postMenu, setPostMenu] = useState(false);
+  const menuToggle = () => {
+    setPostMenu(!postMenu);
+  };
   const [cookies] = useCookies();
 
-
   const onDelete = async (idx) => {
-    await axios.post(`http://localhost:8081/board/delete`,{idx:idx})
-    .then((res)=>{console.log(res,'deleted')})
-    .then(()=>{getList()})
+    await axios
+      .post(`http://localhost:8081/board/delete`, { idx })
+      .then((res) => {
+        console.log(res, "deleted");
+      })
+      .then(() => {
+        getList();
+      });
   };
 
   //404 error
@@ -51,31 +60,51 @@ function Post({getList,idx, image, profile, title, content, tag, date }) {
           alt="profileImage"
           onError={onError}
         />
-        <MoreVertIcon className="post-menu" onClick={menuToggle}/>
-        {postMenu? 
-          <div className="post-menu-list">
-            <ul>
-              <li>Edit Post</li>
-              {title === cookies.nickname
-              ?<li onClick={()=>onDelete(idx)}>Delete Post</li> 
-              : null}
-            </ul>
-          </div>
-        : null
-        }
+
         <h2 className="post-title">{title}</h2>
         <p className="post-content">{content}</p>
-        <div className="post-tags">
-          {tag.map((item, i) => (
-            <span key={i} className="tag-item">
-              #{item}{" "}
-            </span>
-          ))}
-        </div>
-        <div className="post-date">
-          {date.slice(0, 10).replaceAll("-", ". ")}
+
+        <div className="post-footer-container">
+          <div className="post-info-wrap">
+            <div className="post-tags">
+              {tag.map((item, i) => (
+                <span key={i} className="tag-item">
+                  #{item}{" "}
+                </span>
+              ))}
+            </div>
+            <div className="post-date">
+              {date.slice(0, 10).replaceAll("-", ". ")}
+            </div>
+          </div>
+          <div className="post-interest-wrap">
+            <div className="like-box">
+              <FavoriteBorderOutlinedIcon className="like-btn MuiSvgIcon-fontSizeInherit" />
+              <span className="like-count">3만</span>
+            </div>
+            <div className="comment-box">
+              <CommentOutlinedIcon className="comment-btn MuiSvgIcon-fontSizeInherit" />
+              <span className="comment-count">2만</span>
+            </div>
+          </div>
         </div>
       </div>
+      <MoreVertIcon className="more-btn" onClick={menuToggle} />
+      <Motion
+        style={{
+          top: spring(postMenu ? 0 : -40),
+          opacity: spring(postMenu ? 1 : 0),
+        }}
+      >
+        {(style) => (
+          <PostMenu
+            menuToggle={menuToggle}
+            style={{ top: style.top, opacity: style.opacity }}
+            onDelete={onDelete}
+            idx={idx}
+          />
+        )}
+      </Motion>
     </div>
   );
 }
