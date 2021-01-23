@@ -1,201 +1,202 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap");
 
 .post-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  width: 298px;
-  height: 450px;
-  margin: 10px 0;
-  border: 1px solid #707070;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 298px;
+    height: 450px;
+    margin: 10px 0;
+    border: 1px solid #707070;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
 }
 
 .post-container:nth-child(3n + 2) {
-  margin: 10px 20px;
+    margin: 10px 20px;
 }
 
 .post-container:hover .post-img {
-  transform: scale(1.25);
+    transform: scale(1.25);
 }
 
 .post-img {
-  width: 100%;
-  height: 160px;
-  transition: transform 0.5s;
+    width: 100%;
+    height: 160px;
+    transition: transform 0.5s;
 }
 
 .post-wrap {
-  font-family: "Noto Sans KR", sans-serif;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  width: 100%;
-  height: 290px;
-  background-color: #ffffff;
-  padding: 30px 20px 20px 20px;
-  border-top: 1px solid #b8b8b8;
+    font-family: "Noto Sans KR", sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 290px;
+    background-color: #ffffff;
+    padding: 30px 20px 20px 20px;
+    border-top: 1px solid #b8b8b8;
 }
 
 .profile-img {
-  position: absolute;
-  top: 0;
-  transform: translateY(-50%);
-  width: 46px;
-  height: 46px;
-  background: #707070;
-  border-radius: 5px;
-  z-index: 1;
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    background: #707070;
+    border-radius: 5px;
+    z-index: 1;
 }
 
 .post-title {
-  margin: 0;
-  padding: 0;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 20px;
-  font-weight: bold;
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .post-content {
-  margin: 8px 0 0 0;
-  font-size: 12px;
-  font-weight: 300;
-  overflow: scroll;
-  flex-grow: 1;
+    margin: 8px 0 0 0;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 300;
+    word-break: break-all;
+    flex-grow: 1;
 }
 
 .post-footer-container {
-  height: auto;
-  flex-basis: 65px;
-  align-items: flex-end;
-  display: flex;
-  justify-content: space-between;
+    height: auto;
+    flex-basis: 65px;
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
 }
 
 .post-info-wrap {
-  flex: 1;
+    flex: 1;
 }
 
 .post-tags {
-  font-size: 12px;
-  font-weight: bold;
-  color: #b8b8b8;
+    font-size: 12px;
+    font-weight: bold;
+    color: #b8b8b8;
 }
 
 .tag-item {
-  cursor: pointer;
-  transition: color 0.25s;
+    cursor: pointer;
+    transition: color 0.25s;
 }
 
 .tag-item:hover {
-  color: #707070;
+    color: #707070;
 }
 
 .post-footer {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 }
 
 .post-date {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 12px;
-  color: #b8b8b8;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #b8b8b8;
 }
 
 .post-interest-wrap {
-  display: flex;
-  align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
 }
 .like-box {
-  margin-right: 4px;
+    margin-right: 4px;
 }
 .like-box,
 .comment-box {
-  cursor: pointer;
+    cursor: pointer;
 }
 .like-box:hover,
 .comment-box:hover {
-  text-decoration: underline;
-  color: #b8b8b8;
+    text-decoration: underline;
+    color: #b8b8b8;
 }
 
 .like-box:hover .like-btn,
 .comment-box:hover .comment-btn {
-  transition: 0.25s;
-  color: #707070;
+    transition: 0.25s;
+    color: #707070;
 }
 
 .like-box:hover .like-count,
 .comment-box:hover .comment-count {
-  transition: 0.25s;
+    transition: 0.25s;
 
-  color: #707070;
+    color: #707070;
 }
 
 .like-btn,
 .comment-btn {
-  /* width: 30px;
+    /* width: 30px;
   height: 30px; */
-  font-size: 15px;
-  margin-right: 4px;
-  color: #b8b8b8;
+    font-size: 15px;
+    margin-right: 4px;
+    color: #b8b8b8;
 }
 
 .like-count,
 .comment-count {
-  font-size: 12px;
-  color: #b8b8b8;
+    font-size: 12px;
+    color: #b8b8b8;
 }
 
 .post-menu-container {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 40px;
-  border: 1px solid #707070;
-  border-radius: 14px 14px 0px 0px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #707070;
+    border-radius: 14px 14px 0px 0px;
 
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 .modify-box,
 .bookmark-box,
 .delete-box,
 .close-box {
-  padding: 5px 20px;
-  cursor: pointer;
-  color: #b8b8b8;
+    padding: 5px 20px;
+    cursor: pointer;
+    color: #b8b8b8;
 }
 
 .more-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
 
-  /* default state */
-  opacity: 0;
+    /* default state */
+    opacity: 0;
 }
 
 .post-container:hover .more-btn {
-  transition: opacity 0.45s;
-  opacity: 1;
+    transition: opacity 0.45s;
+    opacity: 1;
 }
 
 .modify-box:hover,
 .bookmark-box:hover,
 .delete-box:hover,
 .close-box:hover {
-  color: #707070;
+    color: #707070;
 }

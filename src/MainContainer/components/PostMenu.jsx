@@ -4,10 +4,10 @@ import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutline
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
-function PostMenu({ menuToggle, style, onDelete, idx }) {
+function PostMenu({ postEditToggle,menuToggle, style, onDelete, idx }) {
   return (
     <div className="post-menu-container" style={style}>
-      <div className="modify-box">
+      <div className="modify-box" onClick={()=>{postEditToggle()}}>
         <BorderColorOutlinedIcon />
       </div>
       <div className="bookmark-box">
