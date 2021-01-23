@@ -59,7 +59,6 @@ router.post('/login', (req, res) => {
             if(!rows){
                 res.send('0'); //존재하지않는 아이디
             }else{
-                console.log(rows);
                 var hash_pw = rows[0].user_pw;
                 var user_id = rows[0].user_id;
                 var compare = bcrypt.compareSync(req.body.password,hash_pw);
@@ -111,10 +110,14 @@ router.post('/myprofile', isAuth, (req,res) => {
 
 //본인정보수정
  router.post('/updateprofile',isAuth, upload.single('image'), (req,res) => {
+     if(req.file){
     let profile = '/img/' + req.file.filename;
     var data = [profile, req.body.myself, req.body.idx];
-    let sql = 'update side_project_user set profile = ?, myself = ? where idx = ?';
-
+    var sql = 'update side_project_user set profile = ?, myself = ? where idx = ?';
+     }else{
+        var data = [req.body.myself, req.body.idx];
+        var sql = 'update side_project_user set myself = ? where idx = ?'; 
+     }
     db((err,conn) => {
             if(err)console.log(err);
             conn.query(sql,data,(err,rows) => {

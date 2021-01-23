@@ -1,47 +1,47 @@
 .postUpload {
-  display: flex;
-  flex-direction: column;
-  width: 617px;
-  height: 218px;
-  border: 1px solid #707070;
-  border-radius: 14px;
-  margin-right: 20px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 617px;
+    height: 218px;
+    border: 1px solid #707070;
+    border-radius: 14px;
+    margin-right: 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
+    overflow: hidden;
 }
 
 .postUpload_form {
-  padding: 20px;
+    padding: 20px;
 }
 
 .postUpload_form > textarea:focus {
-  outline: none;
+    outline: none;
 }
 
 .postUpload_text {
-  border-style: none;
-  padding: 10px;
-  font-size: 1rem;
-  width: 600px;
-  height: 120px;
+    border-style: none;
+    padding: 10px;
+    font-size: 1rem;
+    width: 600px;
+    height: 120px;
 }
 
 .postUpload_form_files {
-  border-top: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 5px;
-  margin-top: 10px;
-  height: 80px;
+    border-top: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 5px;
+    margin-top: 10px;
+    height: 80px;
 }
 
 .postUpload_btn {
-  border: none;
-  outline: none;
-  color: #ffffff;
-  background-color: #007bff;
-  height: 50px;
-  width: 90px;
-  border-radius: 4px;
-  cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    background-color: #007bff;
+    height: 50px;
+    width: 90px;
+    border-radius: 4px;
+    cursor: pointer;
 }

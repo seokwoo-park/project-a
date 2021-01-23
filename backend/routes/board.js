@@ -22,6 +22,21 @@ router.get('/list', (req,res) => {
     })
 })
 
+//내글만보기
+router.post('/mylist', isAuth, (req,res) => {
+    var data = [req.body.user_id];
+    let sql = 'select * from side_project_board where user_id = ? ';
+
+    db((err,conn) => {
+        if(err) console.log(err);
+        conn.query(sql,data,(err,rows) => {
+            if(err) console.log(err);
+            res.send(rows);
+        })
+    })
+})
+
+
 //생성
 router.post('/create',isAuth, upload.single('image') ,async(req,res) => {
     console.log(req.body);
@@ -48,10 +63,14 @@ router.post('/create',isAuth, upload.single('image') ,async(req,res) => {
 })
 //수정
 router.post('/update',isAuth, upload.single('image') ,async(req,res) => {
-    let img = '/img/' + req.file.filename;
-    var data = [req.body.content,img,req.body.user_id];
-    let sql = 'update side_project_board set content = ?, image = ? where user_id = ?';
-
+    if(req.file){
+    var img = '/img/' + req.file.filename;
+    var data = [req.body.content,img,req.body.idx];
+    var sql = 'update side_project_board set content = ?, image = ? where idx = ?';
+    }else{
+    var data = [req.body.content, req.body.idx];
+    var sql = 'update side_project_board set content = ? where idx = ?';
+    }
     await db((err,conn) => {
             if(err)console.log(err);
             conn.query(sql,data,(err,rows) => {
