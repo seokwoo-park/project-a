@@ -110,12 +110,12 @@ router.post('/myprofile', isAuth, (req,res) => {
 
 
 //본인정보수정
-router.post('/updateprofile',isAuth, upload.single('image'), (req,res) => {
+ router.post('/updateprofile',isAuth, upload.single('image'), (req,res) => {
     let profile = '/img/' + req.file.filename;
     var data = [profile, req.body.myself, req.body.idx];
     let sql = 'update side_project_user set profile = ?, myself = ? where idx = ?';
 
-    await db((err,conn) => {
+    db((err,conn) => {
             if(err)console.log(err);
             conn.query(sql,data,(err,rows) => {
             if(err)console.log(err);

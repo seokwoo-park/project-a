@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const secretKey = process.env.ACCESS_SECRET_KEY;
 const R_secretKey = process.env.REFRESH_SECRET_KEY;
-const db = require('../lib/db');
+const db = require('../database/db');
 
 const createToken = (user) => {
     const token = jwt.sign({nickName : user.toString()},secretKey,{
