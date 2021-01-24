@@ -1,75 +1,119 @@
 .user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  /* justify-content: space-evenly; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    /* justify-content: space-evenly; */
 }
 
 .userImage {
-  margin-bottom: 5px;
-  width: 60px;
-  height: 60px;
+    margin-bottom: 5px;
+    width: 60px;
+    height: 60px;
 }
 
 .nickname {
-  margin-right: 5px;
-  display: inline-block;
-  font-size: 12px;
-  color: #7b7b7b;
+    margin-right: 5px;
+    display: inline-block;
+    font-size: 12px;
+    color: #7b7b7b;
 }
 
 .logout-icon {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  color: #7b7b7b;
-  cursor: pointer;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    color: #7b7b7b;
+    cursor: pointer;
 }
 
 .logout-icon:hover {
-  color: black;
+    color: black;
 }
 
 .icon-box {
-  margin-top: 5px;
+    margin-top: 5px;
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
-  margin: 0 7.5px;
-  cursor: pointer;
-  color: #7b7b7b;
-  transition: color 0.25s;
+    width: 24px;
+    height: 24px;
+    margin: 0 7.5px;
+    cursor: pointer;
+    color: #7b7b7b;
+    transition: color 0.25s;
 }
 
 .icon:hover {
-  color: black;
+    color: black;
 }
 .heart-icon:hover {
-  color: #d92323;
+    color: #d92323;
 }
 
 .introduce-myself {
-  border: none;
-  outline: none;
+    border: none;
+    outline: none;
+    text-align: center;
 
-  margin-top: 20px;
-  display: inline-block;
-  width: 226px;
-  height: 35px;
-  font-size: 12px;
-  color: #7b7b7b;
-  overflow: hidden;
-  resize: none;
+    margin-top: 20px;
+    display: inline-block;
+    width: 226px;
+    height: 35px;
+    font-size: 12px;
+    color: #7b7b7b;
+    overflow: hidden;
+    resize: none;
 }
 
 .introduce-myself:hover {
-  text-decoration: underline;
-  cursor: pointer;
+    text-decoration: underline;
+    cursor: pointer;
 }
 .introduce-myself:focus {
-  text-decoration: underline;
-  cursor: text;
+    text-decoration: underline;
+    cursor: text;
+}
+
+.user-info-profile-container {
+    display: flex;
+    padding-left: 20px;
+}
+
+.user-info-photoIcon {
+    color: #7b7b7b;
+    object-fit: contain;
+}
+.myself-container {
+    display: flex;
+    margin-top: 10px;
+    width: 250px;
+    word-break: break-all;
+}
+
+.myself-container > p {
+    font-size: 0.9rem;
+    margin: auto;
+}
+
+.myself-btn:hover {
+    cursor: pointer;
+    color: rgb(28, 150, 75);
+    transform: scale(1.2);
+}
+
+.myself-edit-container {
+    display: flex;
+}
+
+.myself-edit-btn {
+    background-color: rgb(44, 158, 59);
+    border-style: none;
+    margin-top: 5px;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+.myself-edit-btn:hover {
+    transform: scale(1.1);
 }

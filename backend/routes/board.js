@@ -10,7 +10,7 @@ router.use('/img',express.static('./upload'));
 
 //리스트
 router.get('/list', (req,res) => {
-    let sql = 'select * from side_project_board';
+    let sql = 'select board.idx, board.user_id, board.content, board.image, board.created, user.profile from side_project_board board inner join side_project_user user on board.user_id = user.user_id';
 
     db((err,conn) => {
         if(err)console.log(err);
@@ -25,7 +25,7 @@ router.get('/list', (req,res) => {
 //내글만보기
 router.post('/mylist', isAuth, (req,res) => {
     var data = [req.body.user_id];
-    let sql = 'select * from side_project_board where user_id = ? ';
+    let sql = 'select board.idx, board.user_id, board.content, board.image, board.created, user.profile from side_project_board board inner join side_project_user user on board.user_id = user.user_id where user.user_id = ?';
 
     db((err,conn) => {
         if(err) console.log(err);

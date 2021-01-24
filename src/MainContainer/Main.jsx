@@ -17,16 +17,22 @@ function Main() {
   const [list, setList] = useState([]);
   const [scrollPage, setScrollPage] = useState(9);
   const [morePost, setMorePost] = useState(true);
+  const [userData, setUserData] = useState({});
+  
 
   const getUser = async () => {
-    const res = await axios.post('http://localhost:8081/user/myprofile',{nickName : cookies.nickname},{
+    await axios.post('http://localhost:8081/user/myprofile',{nickName : cookies.nickname},{
       headers : {
         x_auth : cookies.x_auth,
       }
     }).then((res)=>{
-      console.log(res)
+      setUserData({
+        ...userData,...res.data[0]
+      });
+    }).catch((error) => {
+      console.log(error)
     })
-  }
+  };
 
   const getList = async () => {
     try {
@@ -51,7 +57,7 @@ function Main() {
   return (
     <section className="content-section">
       <PostUpload getList={getList} />
-      <UserInfo />
+      <UserInfo getUser={getUser} userData={userData} />
       <InfiniteScroll
         dataLength={list.length}
         hasMore={morePost}
