@@ -36,7 +36,6 @@ function Post({ getList, idx, image, profile, title, content, tag, date }) {
         },
       })
       .then((res) => {
-        console.log(res, "deleted");
         getList();
       })
   };
