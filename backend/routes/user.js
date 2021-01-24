@@ -91,8 +91,8 @@ router.get('/retoken', isRefresh);
 //본인정보 조회
 router.post('/myprofile', isAuth, (req,res) => {
 
-    var data = [req.body.idx];
-    let sql = 'select * from side_project_user where idx = ?';
+    var data = [req.body.nickName];
+    let sql = 'select * from side_project_user where user_id = ?';
     
     db((err,conn) => {
         if(err) console.log(err);
@@ -112,11 +112,11 @@ router.post('/myprofile', isAuth, (req,res) => {
  router.post('/updateprofile',isAuth, upload.single('image'), (req,res) => {
      if(req.file){
     let profile = '/img/' + req.file.filename;
-    var data = [profile, req.body.myself, req.body.idx];
-    var sql = 'update side_project_user set profile = ?, myself = ? where idx = ?';
+    var data = [profile, req.body.myself, req.body.nickName];
+    var sql = 'update side_project_user set profile = ?, myself = ? where user_id = ?';
      }else{
-        var data = [req.body.myself, req.body.idx];
-        var sql = 'update side_project_user set myself = ? where idx = ?'; 
+        var data = [req.body.myself, req.body.nickName];
+        var sql = 'update side_project_user set myself = ? where user_id = ?'; 
      }
     db((err,conn) => {
             if(err)console.log(err);
