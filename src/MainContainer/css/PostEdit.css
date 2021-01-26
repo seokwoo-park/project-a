@@ -1,60 +1,63 @@
 .postEdit {
-    position: absolute;
-    z-index: 5;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .postEdit-form {
-    padding: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
 }
 
 .postEdit-text {
-    font-size: 0.9rem;
-    width: 275px;
-    height: 40vh;
-    margin: auto;
-    padding: 10px;
-    color: black;
+  font-size: 0.9rem;
+  width: 275px;
+  height: 40vh;
+  margin: auto;
+  padding: 10px;
+  color: black;
 }
 
 .postEdit_form_files {
-    border-top: 1px solid rgb(255, 255, 255);
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 5px;
-    margin-top: 2px;
-    height: 110px;
-    width: 280px;
+  border-top: 1px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px;
+  margin-top: 2px;
+  height: 110px;
+  width: 280px;
 }
 
 .postEdit_img_preview {
-    position: absolute;
-    left: 100px;
+  position: absolute;
+  left: 100px;
 }
 
 .postEdit_btn {
-    border: none;
-    outline: none;
-    color: #ffffff;
-    background-color: #007bff;
-    height: 35px;
-    width: 90px;
-    border-radius: 4px;
-    cursor: pointer;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  background-color: #007bff;
+  height: 35px;
+  width: 90px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .postEdit_btn:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .btn_close {
-    background-color: rgb(63, 124, 124);
+  background-color: rgb(63, 124, 124);
 }
 
 .postEdit_bnt_container {
-    width: 280px;
-    display: flex;
-    justify-content: space-around;
+  width: 280px;
+  display: flex;
+  justify-content: space-around;
 }

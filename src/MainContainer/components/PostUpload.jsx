@@ -1,40 +1,27 @@
 import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import axios from "axios";
-import { useCookies } from "react-cookie";
 import "../css/PostUpload.css";
+import { createPost, usePostDispatch, useToken } from "./PostContext";
 
-function PostUpload({ getList }) {
+function PostUpload({}) {
   const [postInput, setPostInput] = useState("");
 
   const [imageFile, setImageFile] = useState("");
   const [imageView, setImageView] = useState("");
   const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
-  const [cookies] = useCookies();
-
-  const createPost = async (e) => {
+  const token = useToken();
+  const dispatch = usePostDispatch();
+  const createPostHandler = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("content", postInput);
     formData.append("image", imageFile);
-    formData.append("user_id", cookies.nickname);
+    formData.append("user_id", "test");
 
-    await axios
-      .post("http://localhost:8081/board/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          x_auth: cookies.x_auth,
-        },
-      })
-      .catch((res) => {
-        console.log("에러");
-        console.log(res);
-        //예외 처리
-      });
+    await createPost(dispatch, token, formData);
+
     setPostInput("");
-
-    getList();
   };
 
   const onFileChange = (e) => {
@@ -49,7 +36,7 @@ function PostUpload({ getList }) {
 
   return (
     <div className="postUpload">
-      <form className="postUpload_form" onSubmit={createPost}>
+      <form className="postUpload_form" onSubmit={createPostHandler}>
         <textarea
           className="postUpload_text"
           required
@@ -92,4 +79,4 @@ function PostUpload({ getList }) {
   );
 }
 
-export default PostUpload;
+export default React.memo(PostUpload);

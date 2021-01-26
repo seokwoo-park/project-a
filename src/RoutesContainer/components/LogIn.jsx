@@ -1,14 +1,13 @@
 import axios from "axios";
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button } from "@material-ui/core";
 import "../css/LogIn.css";
 import { useCookies } from "react-cookie";
 import Loader from "../../components/Loader";
-import {isLoadingContext} from '../../components/Routes';
+import { isLoadingContext } from "../../components/Routes";
 
 function LogIn({ history }) {
-
-  const {isLoading,setIsLoading} = useContext(isLoadingContext);
+  const { isLoading, setIsLoading } = useContext(isLoadingContext);
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -49,20 +48,21 @@ function LogIn({ history }) {
           console.log("인증성공", res);
           //엑세스토큰과 리프레쉬토큰 저장
           setCookie("x_auth", res.data[0], { maxAge: 1800 });
-          setCookie("nickname",res.data[2]);
+          setCookie("nickname", res.data[2]);
           localStorage.setItem("r_x_auth", res.data[1]);
-          history.push("/home");
         }
-      }).catch((error)=>{
-        alert('인터넷 연결상태를 확인하여주세요.')
       })
-      setIsLoading(false);
+      .catch((error) => {
+        alert("인터넷 연결상태를 확인하여주세요.");
+      });
+    setIsLoading(false);
+    history.push("/home");
   };
 
   return (
     <div className="logIn">
       <h1>Yaja tree</h1>
-      {isLoading ? <Loader isLoading={isLoading}/> : null}
+      {isLoading ? <Loader isLoading={isLoading} /> : null}
 
       <form className="form_container logIn_form" onSubmit={onSubmitHandler}>
         <h2>LOG IN</h2>
