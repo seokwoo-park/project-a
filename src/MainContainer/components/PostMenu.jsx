@@ -3,11 +3,11 @@ import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import { useToken, deletePost, usePostDispatch } from "./PostContext";
+import { useToken, deletePost, useFetchData } from "./PostContext";
 
 function PostMenu({ postEditToggle, menuToggle, style, idx }) {
   const token = useToken();
-  const dispatch = usePostDispatch();
+  const fetchData = useFetchData();
   return (
     <div className="post-menu-container" style={style}>
       <div
@@ -24,7 +24,10 @@ function PostMenu({ postEditToggle, menuToggle, style, idx }) {
       </div>
       <div
         className="delete-box"
-        onClick={() => deletePost(dispatch, token, idx)}
+        onClick={async () => {
+          await deletePost(token, idx);
+          fetchData();
+        }}
       >
         <DeleteOutlinedIcon />
       </div>
