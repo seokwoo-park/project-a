@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Post from "./components/Post";
 import PostUpload from "./components/PostUpload";
 import UserInfo from "./components/UserInfo";
@@ -7,63 +6,30 @@ import "./css/Main.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SpeakerNotesOffIcon from "@material-ui/icons/SpeakerNotesOff";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
-import { useCookies } from "react-cookie";
-
+import { useFetchData, usePostState } from "./components/PostContext";
 
 function Main() {
+  // postContext에서 컨텍스트로 state와 fetchData를 받아옴.
+  // state에는 postData 와 userData가 있음.
+  const state = usePostState();
+  const fetchData = useFetchData();
+  const { hasMore } = state;
+  const { postData } = state.data;
+  console.log(state.data);
+  if (!postData) return null;
 
-  const [cookies] = useCookies();
-
-  const [list, setList] = useState([]);
-  const [scrollPage, setScrollPage] = useState(9);
-  const [morePost, setMorePost] = useState(true);
-  const [userData, setUserData] = useState({});
-  
-
-  const getUser = async () => {
-    await axios.post('http://localhost:8081/user/myprofile',{nickName : cookies.nickname},{
-      headers : {
-        x_auth : cookies.x_auth,
-      }
-    }).then((res)=>{
-      setUserData({
-        ...userData,...res.data[0]
-      });
-    }).catch((error) => {
-      console.log(error)
-    })
-  };
-
-  const getList = async () => {
-    try {
-      const res = await axios.get("http://localhost:8081/board/list");
-      let result = res.data.reverse().slice(0, scrollPage);
-      setList([...result]);
-      if (res.data.length === list.length) {
-        setMorePost(false);
-      }
-    } catch (error) {
-      throw new Error("cannot response", error);
-    }
-  };
-
-  useEffect(() => {
-    getList();
-    getUser();
-  }, [scrollPage]);
-
-  if (list === null) return null;
-  
   return (
     <section className="content-section">
-      <PostUpload getList={getList} />
-      <UserInfo getUser={getUser} userData={userData} />
+      <PostUpload />
+      <UserInfo />
       <InfiniteScroll
-        dataLength={list.length}
-        hasMore={morePost}
-        next={() => {
-          setTimeout(() => setScrollPage(scrollPage + 6), 1000);
-        }}
+        dataLength={postData.length}
+        next={() =>
+          setTimeout(() => {
+            fetchData();
+          }, 1000)
+        }
+        hasMore={hasMore}
         loader={
           <p className="content-loading">
             Loading <AutorenewIcon />
@@ -76,19 +42,18 @@ function Main() {
         }
         className="content-section"
       >
-        {list.map((data) => {
+        {postData.map((post) => {
           return (
             <Post
-              getList={getList}
-              idx={data.idx}
-              key={data.idx}
-              id={data.user_id}
-              title={data.user_id}
-              content={data.content}
-              image={data.image}
+              key={post.idx}
+              idx={post.idx}
+              id={post.user_id}
+              title={post.user_id}
+              content={post.content}
+              image={post.image}
               tag={["react", "javascript", "node"]}
-              date={data.created}
-              profile={data.profile}
+              date={post.created}
+              profile={post.profile}
             />
           );
         })}

@@ -1,12 +1,12 @@
 import React from "react";
 import "../App.css";
 import Routes from "./Routes.jsx";
-
+import { CookiesProvider } from "react-cookie";
 function App() {
   return (
-    <div className="App">
+    <CookiesProvider>
       <Routes />
-    </div>
+    </CookiesProvider>
   );
 }
 
