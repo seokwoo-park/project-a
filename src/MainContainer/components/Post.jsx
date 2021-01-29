@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import "../css/Post.css";
 import defaultImage from "../images/defaultImage.png";
