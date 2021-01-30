@@ -1,63 +1,98 @@
-import React, { createContext, useReducer, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import { Cookies } from "react-cookie";
 
-function postReducer(state, action) {
-  switch (action.type) {
-    case "GET_LIST":
-      return {
-        data: action.data,
-      };
-    case "GET_DELETE":
-      return {
-        data: deletePost(),
-      };
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
-}
+const cookies = new Cookies();
 
-const initialState = [];
-
+//postData 와 userData 데이터는 한곳에 합칠수도있고 분리할수도 있음.
+const initialState = {
+  data: {
+    postData: [],
+    userData: [],
+  },
+  hasMore: true,
+};
 const PostStateContext = createContext();
-const PostDispatchContext = createContext();
-const TokenContext = createContext();
+const PostFetchContext = createContext();
+
 export default function PostContextProvider({ children }) {
-  const [state, dispatch] = useReducer(postReducer, initialState);
-  const [cookies] = useCookies();
+  const [state, setState] = useState(initialState);
+  const postItemLength = useRef(9);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8081/board/list");
+      const result = res.data.reverse().slice(0, postItemLength.current);
+      console.log(result);
+      setState({
+        ...state,
+        data: {
+          userData: state.data.userData,
+          postData: result,
+        },
+      });
+      if (state.data.postData.length === res.data.length) {
+        setState({ ...state, hasMore: false });
+      }
+      postItemLength.current += 9;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUser = async () => {
+    console.log("getUser()");
+    try {
+      checkToken();
+      const res = await axios.post(
+        "http://localhost:8081/user/myprofile",
+        { nickName: cookies.get("nickname") },
+        {
+          headers: {
+            x_auth: getToken(),
+          },
+        }
+      );
+      setState((prevState) => {
+        return {
+          ...state,
+          data: {
+            postData: prevState.data.postData.concat(state.data.postData),
+            userData: res.data,
+          },
+        };
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    console.log("dispatch만 보자");
-    const fetchData = () => {
-      getList(dispatch);
-    };
     fetchData();
+    getUser();
   }, []);
+
   return (
     <PostStateContext.Provider value={state}>
-      <PostDispatchContext.Provider value={dispatch}>
-        <TokenContext.Provider value={cookies.x_auth}>
-          {children}
-        </TokenContext.Provider>
-      </PostDispatchContext.Provider>
+      <PostFetchContext.Provider value={fetchData}>
+        {children}
+      </PostFetchContext.Provider>
     </PostStateContext.Provider>
   );
 }
 
-// export function useFetchData() {
-//   const refetch = useContext(PostFetchContext);
-//   if (!refetch) {
-//     throw new Error("Cannot find refetch");
-//   }
-//   return refetch;
-// }
-
-export function useToken() {
-  const token = useContext(TokenContext);
-  if (!token) {
-    throw new Error("Cannot find token");
+export function useFetchData() {
+  const fetchData = useContext(PostFetchContext);
+  if (!fetchData) {
+    throw new Error("Cannot find fetchData");
   }
-  return token;
+  return fetchData;
 }
 
 export function usePostState() {
@@ -68,50 +103,114 @@ export function usePostState() {
   return state;
 }
 
-export function usePostDispatch() {
-  const dispatch = useContext(PostDispatchContext);
-  if (!dispatch) {
-    throw new Error("Connot find UserProvider");
-  }
-  return dispatch;
+// POST UPDATE
+export async function updatePost(formData) {
+  try {
+    checkToken();
+    await axios
+      .post("http://localhost:8081/board/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          x_auth: getToken(),
+        },
+      })
+      .catch((res) => {
+        console.log("에러");
+        console.log(res);
+        //예외 처리
+      });
+  } catch (error) {}
 }
 
-export async function getList(dispatch) {
+// POST DELETE
+export async function deletePost(idx) {
   try {
-    const res = await axios.get("http://localhost:8081/board/list");
-    dispatch({ type: "GET_LIST", data: res.data });
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function deletePost(dispatch, token, idx) {
-  try {
+    checkToken();
     await axios.post(
       `http://localhost:8081/board/delete`,
       { idx },
       {
         headers: {
-          x_auth: token,
+          x_auth: getToken(),
         },
       }
     );
-    getList(dispatch);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function createPost(dispatch, token, formData) {
+// POST CREATE
+export async function createPost(formData) {
   try {
+    checkToken();
     await axios.post("http://localhost:8081/board/create", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        x_auth: token,
+        x_auth: getToken(),
       },
     });
-    getList(dispatch);
   } catch (error) {
     console.log(error);
   }
 }
+
+// USER PROFILE UPDATE
+export async function updateProfile(formData) {
+  try {
+    await axios
+      .post("http://localhost:8081/user/updateprofile", formData, {
+        headers: {
+          x_auth: getToken(),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+  } catch (error) {}
+}
+// 토큰채크 토큰 받아오는건 이곳에서만 쓰기위해 export 안함.
+function getToken() {
+  try {
+    const token = cookies.get("x_auth");
+    return token;
+  } catch (error) {
+    return error;
+  }
+}
+
+function checkToken() {
+  if (!cookies.get("x_auth")) {
+    console.log("cannot find token");
+    window.location.reload();
+  }
+}
+export function removeCoookies() {
+  cookies.remove("x_auth");
+  cookies.remove("nickname");
+  window.location.reload();
+}
+
+export function getCookies(type) {
+  return cookies.get(type);
+}
+
+// USER
+// export async function getUser() {
+//   try {
+//     checkToken();
+//     const res = await axios.post(
+//       "http://localhost:8081/user/myprofile",
+//       { nickName: cookies.get("nickname") },
+//       {
+//         headers: {
+//           x_auth: cookies.get("x_auth"),
+//         },
+//       }
+//     );
+//     return res.data[0];
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

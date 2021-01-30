@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { useCookies } from "react-cookie";
-import axios from "axios";
+import { updatePost, useFetchData } from "./PostContext";
 
 import "../css/PostEdit.css";
 
 function PostEdit({ postEditToggle, getList, idx, content, image }) {
-  const [cookies] = useCookies();
-
+  const fetchData = useFetchData();
   const [textEdit, setTextEdit] = useState(content);
 
   const [editImageFile, setEditImageFile] = useState("");
@@ -37,20 +35,10 @@ function PostEdit({ postEditToggle, getList, idx, content, image }) {
       formData.append("image", editImageFile);
     }
 
-    await axios
-      .post("http://localhost:8081/board/update", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          x_auth: cookies.x_auth,
-        },
-      })
-      .catch((res) => {
-        console.log("에러");
-        console.log(res);
-        //예외 처리
-      });
+    updatePost(formData);
+
     postEditToggle();
-    getList();
+    fetchData();
   };
 
   return (

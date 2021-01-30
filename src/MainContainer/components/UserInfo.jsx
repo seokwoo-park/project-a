@@ -1,11 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import React from "react";
 import defaultUserImage from "../images/defaultUserInfo.svg";
-import CreateIcon from "@material-ui/icons/Create";
-import Tooltip from "@material-ui/core/Tooltip";
-import DoneIcon from "@material-ui/icons/Done";
-import CloseIcon from "@material-ui/icons/Close";
-
+// import CreateIcon from "@material-ui/icons/Create";
+// import Tooltip from "@material-ui/core/Tooltip";
+// import DoneIcon from "@material-ui/icons/Done";
+// import CloseIcon from "@material-ui/icons/Close";
 import {
   RiLogoutBoxRLine as LogoutIcon,
   RiDraftLine as ListIcon,
@@ -16,63 +14,65 @@ import {
 } from "react-icons/ri";
 import "../css/UserInfo.css";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import axios from "axios";
+import { removeCoookies, updateProfile, useFetchData } from "./PostContext";
 
 function UserInfo() {
-  const [mySelf, setMySelf] = useState("");
-  const [showMySelf, setShowMySelf] = useState(true);
+  // GETUSER를 불러오는 작업해야함...
+  // 1. postContext에서 import 해오는 방법
+  // 2. postContext에 state에 userData로 받아오는 방법.
+  // 3. UserInfo 에서 직접 axios 호출해서 useState 하는 방법. (비추이지만 가장 가능성 높음)
+  // 근데 지금 1, 2 번 해봤는데 뭔가 오류 남..
 
-  const [cookies, , removeCookie] = useCookies();
-  const myselfEl = useRef();
+  const fetchData = useFetchData();
+
+  // const [mySelf, setMySelf] = useState("");
+  // const [showMySelf, setShowMySelf] = useState(true);
+
+  // const [cookies, , removeCookie] = useCookies();
+  // const myselfEl = useRef();
   const onClickHandler = () => {
-    removeCookie("x_auth");
-    removeCookie("nickname");
+    removeCoookies();
   };
 
-  const onFileChange = (e) => {
+  const onFileChange = async (e) => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
     formData.append("nickName", "userData.user_id");
 
-    axios
-      .post("http://localhost:8081/user/updateprofile", formData, {
-        headers: {
-          x_auth: cookies.x_auth,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => console.log(error));
+    await updateProfile(formData);
+    fetchData();
   };
 
-  const mySelfHandler = async () => {
-    axios
-      .post(
-        "http://localhost:8081/user/updateprofile",
-        { myself: mySelf, nickName: "userData.user_id" },
-        {
-          headers: {
-            x_auth: cookies.x_auth,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        showMySelfToggle();
-      })
-      .catch((error) => console.log(error));
-  };
+  // const mySelfHandler = async () => {
+  //   axios
+  //     .post(
+  //       "http://localhost:8081/user/updateprofile",
+  //       { myself: mySelf, nickName: "userData.user_id" },
+  //       {
+  //         headers: {
+  //           x_auth: cookies.x_auth,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       showMySelfToggle();
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
-  const showMySelfToggle = () => {
-    setShowMySelf(!showMySelf);
-  };
+  // const showMySelfToggle = () => {
+  //   setShowMySelf(!showMySelf);
+  // };
 
   return (
     <div className="user-info">
       <div className="user-info-profile-container">
         <img className="userImage" src={defaultUserImage} alt="profile image" />
-        <label htmlFor="user-info-profile-files">
+        <label
+          htmlFor="user-info-profile-files"
+          className="user-edit-photo-box"
+        >
           <AddAPhotoIcon className="user-info-photoIcon" />
         </label>
         <input
