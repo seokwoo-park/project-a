@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import "../css/PostUpload.css";
-import { createPost, useFetchData } from "./PostContext";
+import { createPost } from "../../modules/posts";
+import { useDispatch } from "react-redux";
 
 function PostUpload() {
+  const dispatch = useDispatch();
   const [postInput, setPostInput] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [imageView, setImageView] = useState("");
   const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
-
-  const fatchData = useFetchData();
 
   const createPostHandler = async (e) => {
     e.preventDefault();
@@ -19,10 +19,8 @@ function PostUpload() {
     formData.append("image", imageFile);
     formData.append("user_id", "test");
 
-    await createPost(formData);
-
+    dispatch(createPost(formData));
     setPostInput("");
-    fatchData();
   };
 
   const onFileChange = (e) => {

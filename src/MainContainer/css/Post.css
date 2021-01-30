@@ -14,7 +14,7 @@
   box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
 }
 
-.post-container:nth-child(3n + 2) {
+.post-container:nth-child(3n + 1) {
   margin: 10px 20px;
 }
 

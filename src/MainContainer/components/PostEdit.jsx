@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { updatePost, useFetchData } from "./PostContext";
 
 import "../css/PostEdit.css";
 
-function PostEdit({ postEditToggle, getList, idx, content, image }) {
-  const fetchData = useFetchData();
+function PostEdit({ postEditToggle, idx, content, image }) {
   const [textEdit, setTextEdit] = useState(content);
 
   const [editImageFile, setEditImageFile] = useState("");
@@ -34,11 +32,6 @@ function PostEdit({ postEditToggle, getList, idx, content, image }) {
     if (editImageFile) {
       formData.append("image", editImageFile);
     }
-
-    updatePost(formData);
-
-    postEditToggle();
-    fetchData();
   };
 
   return (

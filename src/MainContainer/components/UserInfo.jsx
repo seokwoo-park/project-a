@@ -14,7 +14,6 @@ import {
 } from "react-icons/ri";
 import "../css/UserInfo.css";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { removeCoookies, updateProfile, useFetchData } from "./PostContext";
 
 function UserInfo() {
   // GETUSER를 불러오는 작업해야함...
@@ -23,24 +22,17 @@ function UserInfo() {
   // 3. UserInfo 에서 직접 axios 호출해서 useState 하는 방법. (비추이지만 가장 가능성 높음)
   // 근데 지금 1, 2 번 해봤는데 뭔가 오류 남..
 
-  const fetchData = useFetchData();
-
   // const [mySelf, setMySelf] = useState("");
   // const [showMySelf, setShowMySelf] = useState(true);
 
   // const [cookies, , removeCookie] = useCookies();
   // const myselfEl = useRef();
-  const onClickHandler = () => {
-    removeCoookies();
-  };
+  const onClickHandler = () => {};
 
   const onFileChange = async (e) => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
     formData.append("nickName", "userData.user_id");
-
-    await updateProfile(formData);
-    fetchData();
   };
 
   // const mySelfHandler = async () => {
