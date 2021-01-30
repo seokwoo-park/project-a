@@ -8,13 +8,16 @@ function postReducer(state, action) {
       return {
         data: action.data,
       };
-
+    case "GET_DELETE":
+      return {
+        data: deletePost(),
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
-const initialState = { data: null };
+const initialState = [];
 
 const PostStateContext = createContext();
 const PostDispatchContext = createContext();
