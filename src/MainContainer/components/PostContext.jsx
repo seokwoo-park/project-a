@@ -46,32 +46,32 @@
 //     }
 //   };
 
-//   const getUser = async () => {
-//     console.log("getUser()");
-//     try {
-//       checkToken();
-//       const res = await axios.post(
-//         "http://localhost:8081/user/myprofile",
-//         { nickName: cookies.get("nickname") },
-//         {
-//           headers: {
-//             x_auth: getToken(),
-//           },
-//         }
-//       );
-//       setState((prevState) => {
-//         return {
-//           ...state,
-//           data: {
-//             postData: prevState.data.postData.concat(state.data.postData),
-//             userData: res.data,
-//           },
-//         };
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  // const getUser = async () => {
+  //   console.log("getUser()");
+  //   try {
+  //     checkToken();
+  //     const res = await axios.post(
+  //       "http://localhost:8081/user/myprofile",
+  //       { nickName: cookies.get("nickname") },
+  //       {
+  //         headers: {
+  //           x_auth: getToken(),
+  //         },
+  //       }
+  //     );
+  //     setState((prevState) => {
+  //       return {
+  //         ...state,
+  //         data: {
+  //           postData: prevState.data.postData.concat(state.data.postData),
+  //           userData: res.data,
+  //         },
+  //       };
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 //   useEffect(() => {
 //     fetchData();

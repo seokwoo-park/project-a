@@ -4,7 +4,7 @@ import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutline
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import { useDispatch } from "react-redux";
-import { deletePost } from "../../modules/posts";
+import { deletePost } from '../../redux/postRedux/postAction';
 
 function PostMenu({ postEditToggle, menuToggle, style, idx }) {
   const dispatch = useDispatch();
