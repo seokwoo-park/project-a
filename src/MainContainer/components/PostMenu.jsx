@@ -3,10 +3,11 @@ import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import { deletePost, useFetchData } from "./PostContext";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../modules/posts";
 
 function PostMenu({ postEditToggle, menuToggle, style, idx }) {
-  const fetchData = useFetchData();
+  const dispatch = useDispatch();
   return (
     <div className="post-menu-container" style={style}>
       <div
@@ -21,13 +22,7 @@ function PostMenu({ postEditToggle, menuToggle, style, idx }) {
       <div className="bookmark-box">
         <BookmarkBorderOutlinedIcon />
       </div>
-      <div
-        className="delete-box"
-        onClick={async () => {
-          await deletePost(idx);
-          fetchData();
-        }}
-      >
+      <div className="delete-box" onClick={() => dispatch(deletePost(idx))}>
         <DeleteOutlinedIcon />
       </div>
       <div className="close-box" onClick={menuToggle}>
