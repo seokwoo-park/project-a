@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import {editPost} from '../../redux/postRedux/postAction'
-import {useDispatch} from 'react-redux'
+import { editPost } from "../../redux/postRedux/postAction";
+import { useDispatch } from "react-redux";
 
 import "../css/PostEdit.css";
 
@@ -12,7 +12,7 @@ function PostEdit({ postEditToggle, idx, content, image }) {
 
   const [editImageFile, setEditImageFile] = useState("");
   const [editImageView, setEditImageView] = useState("");
-  const [editImgStyle, setEditImgStyle] = useState({
+  const [editImgStyle] = useState({
     objectFit: "contain",
     width: "100px",
   });
@@ -22,7 +22,6 @@ function PostEdit({ postEditToggle, idx, content, image }) {
     if (e.target.files[0]) {
       setEditImageFile(e.target.files[0]);
       setEditImageView(URL.createObjectURL(e.target.files[0]));
-      //   setImgStyle({ objectFit: "contain", width: "100px" });
     } else {
       return;
     }

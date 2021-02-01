@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import "../css/Post.css";
 import defaultImage from "../images/defaultImage.png";
 import defaultProfile from "../images/defaultProfile.png";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import CommentOutlinedIcon from "@material-ui/icons/CommentOutlined";
-import PostMenu from "./PostMenu";
 import { Motion, spring } from "react-motion";
+import PostMenu from "./PostMenu";
 import PostEdit from "./PostEdit";
+import "../css/Post.css";
 
 function Post({ idx, image, profile, title, content, tag, date }) {
   const [postMenu, setPostMenu] = useState(false);
@@ -20,20 +20,6 @@ function Post({ idx, image, profile, title, content, tag, date }) {
   const postEditToggle = () => {
     setPostEdit(!postEdit);
   };
-
-  //나중에 유저정보 받아와서 본인의 포스트만 삭제할수있도록 구현해야함.
-  // const onDelete = async (idx) => {
-  //   await axios.post(
-  //     `http://localhost:8081/board/delete`,
-  //     { idx },
-  //     {
-  //       headers: {
-  //         x_auth: cookies.x_auth,
-  //       },
-  //     }
-  //   );
-  //   getList(dispatch);
-  // };
 
   //404 error
   const onError = (e) => {

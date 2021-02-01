@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import "../css/PostUpload.css";
-import { createPost, getPosts } from '../../redux/postRedux/postAction'
+import { createPost } from "../../redux/postRedux/postAction";
 import { useDispatch, useSelector } from "react-redux";
-
 
 function PostUpload() {
   const [postInput, setPostInput] = useState("");
@@ -11,7 +10,7 @@ function PostUpload() {
   const [imageView, setImageView] = useState("");
   const [imgStyle, setImgStyle] = useState({ visibility: "hidden" });
 
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const createPostHandler = async (e) => {
