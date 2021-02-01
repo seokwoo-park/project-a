@@ -5,25 +5,56 @@ const cookies = new Cookies();
 
 ///타입과 액션 명시
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS"
-export const getPostsSuccess = (posts) => {
+export const MORE_POSTS = "MORE_POSTS"
+export const NO_MORE_POSTS = "NO_MORE_POSTS"
+
+export const getPostsSuccess = (postList) => {
     return{
         type : GET_POSTS_SUCCESS,
-        payload : posts
+        payload : postList
     }
 }
 
+export const morePosts = (posts) => {
+  return{
+    type : MORE_POSTS,
+    payload : posts
+  }
+}
+
+export const noMorePots = (posts) => {
+  return{
+    type : NO_MORE_POSTS,
+    payload : posts
+  }
+}
 
 //메인
 export const getPosts = () => async (dispatch) => {
     console.log('GET POST STARTED!')
     await axios.get("http://localhost:8081/board/list")
     .then((res)=>{
-        console.log(res.data)
-        dispatch(getPostsSuccess(res.data.reverse()))
+      const result = res.data.reverse()
+      console.log(result.slice(0,9))
+        dispatch(getPostsSuccess(result.slice(0,9)))
     }).catch((error)=>{
         alert(`Can't load the posts. Error : ${error}`)
     })
-    
+}
+
+export const fetchMorePosts = (number) => async (dispatch) => {
+  console.log('More Posts fetch!')
+  await axios.get("http://localhost:8081/board/list")
+  .then((res)=>{
+    let result = res.data.reverse()
+    let data = res.data.slice(0,number)
+    if(result.length !== data.length){
+      dispatch(morePosts(data))
+    } else {
+      dispatch(noMorePots(result))
+    }
+  }).catch((error)=>{ alert(`Can't load the posts. Error : ${error}`)
+})
 }
 
 
