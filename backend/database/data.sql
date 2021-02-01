@@ -1,4 +1,6 @@
 /****배포시 삭제해야합니다. 참고용
+// 포스트 삭제
+delete from side_project_board;
 
 //유저테이블
 

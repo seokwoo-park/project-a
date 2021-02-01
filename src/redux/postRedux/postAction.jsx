@@ -22,7 +22,7 @@ export const morePosts = (posts) => {
   }
 }
 
-export const noMorePots = (posts) => {
+export const noMorePosts = (posts) => {
   return{
     type : NO_MORE_POSTS,
     payload : posts
@@ -36,7 +36,12 @@ export const getPosts = () => async (dispatch) => {
     .then((res)=>{
       const result = res.data.reverse()
       console.log(result.slice(0,9))
+      if(res.data.length === 0) 
+      {
+        dispatch(noMorePosts(result))
+      } else {
         dispatch(getPostsSuccess(result.slice(0,9)))
+      }
     }).catch((error)=>{
         alert(`Can't load the posts. Error : ${error}`)
     })
@@ -47,11 +52,13 @@ export const fetchMorePosts = (number) => async (dispatch) => {
   await axios.get("http://localhost:8081/board/list")
   .then((res)=>{
     let result = res.data.reverse()
+    console.log(result)
     let data = res.data.slice(0,number)
+    console.log(data)
     if(result.length !== data.length){
       dispatch(morePosts(data))
     } else {
-      dispatch(noMorePots(result))
+      dispatch(noMorePosts(result))
     }
   }).catch((error)=>{ alert(`Can't load the posts. Error : ${error}`)
 })
@@ -84,7 +91,7 @@ export const deletePost = (idx) => async (dispatch) => {
         },
       }
     );
-    dispatch(getPosts());
+    dispatch(fetchMorePosts());
   } catch (error) {
       alert(`Can't delete post. Error : ${error}`)
 }
@@ -99,7 +106,7 @@ export const editPost = (formData) => async (dispatch) => {
                     x_auth: cookies.get("x_auth"),
                   },
             })
-            dispatch(getPosts());
+            dispatch(fetchMorePosts());
     }
     catch(error){
         alert(`Can't edit post. Error : ${error}`)

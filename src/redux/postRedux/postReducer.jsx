@@ -8,18 +8,24 @@ const initialState = {
  const postsReducer = (state=initialState,action) => {
     switch (action.type) {
         case GET_POSTS_SUCCESS:
-            const postList = {...state,postList:[...action.payload]}
+            console.log(action.payload)
+            const postList = {...state,
+                hasMore:true,
+                postList:[...action.payload]
+            }
             return postList
 
         case MORE_POSTS:
-            const morePosts = {...state,postList:[...action.payload]}
+            const morePosts = {...state,
+                hasMore:true,
+                postList:[...action.payload]
+            }
             return morePosts
 
         case NO_MORE_POSTS:
-            const noMorePosts = {
-                ...state,
-                postList:[...action.payload],
-                hasMore:false
+            const noMorePosts = {...state,
+                hasMore: false,
+                postList:[...action.payload]
             }
             return noMorePosts
 
