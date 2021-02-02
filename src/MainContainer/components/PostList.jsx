@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Post from "./Post";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMorePosts, getPosts } from "../../redux/postRedux/postAction";
-import InfiniteScroll from 'react-infinite-scroll-component';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
-import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
-
+import InfiniteScroll from "react-infinite-scroll-component";
+import AutorenewIcon from "@material-ui/icons/Autorenew";
+import SpeakerNotesOffIcon from "@material-ui/icons/SpeakerNotesOff";
 
 function PostList() {
   const posts = useSelector((state) => state.posts);
-  const [scrollPage,setScrollPage] = useState(15)
+  const [scrollPage, setScrollPage] = useState(15);
+  const nextPost = useRef(15);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,19 +19,27 @@ function PostList() {
   return (
     <>
       <InfiniteScroll
-        className = "content-section"
+        className="content-section"
         dataLength={posts.postList.length}
-        next={()=>{setTimeout(() => {
-          dispatch(fetchMorePosts(scrollPage));
-          setScrollPage(scrollPage+6)         
-        }, 1000)}}
+        next={() => {
+          setTimeout(() => {
+            dispatch(fetchMorePosts(scrollPage));
+            setScrollPage(scrollPage + 6);
+            // nextPost.current += 6;
+          }, 1000);
+        }}
         hasMore={posts.hasMore}
         loader={
-        <p className="content-loading"> Loading <AutorenewIcon/></p>
-          }
+          <p className="content-loading">
+            {" "}
+            Loading <AutorenewIcon />
+          </p>
+        }
         endMessage={
-        <p className="content-loading">You have seen it all the posts <SpeakerNotesOffIcon/></p>
-          }
+          <p className="content-loading">
+            You have seen it all the posts <SpeakerNotesOffIcon />
+          </p>
+        }
       >
         {posts.postList.map((post) => {
           return (
