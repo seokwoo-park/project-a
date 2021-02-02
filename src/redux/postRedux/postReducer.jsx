@@ -1,4 +1,4 @@
-import {GET_POSTS_SUCCESS,MORE_POSTS,NO_MORE_POSTS} from './postAction'
+import {GET_POSTS_SUCCESS,MORE_POSTS,NO_MORE_POSTS,GET_MY_POSTS} from './postAction'
 
 const initialState = {
     hasMore:true,
@@ -28,6 +28,13 @@ const initialState = {
                 postList:[...action.payload]
             }
             return noMorePosts
+
+        case GET_MY_POSTS:
+            const getMyPosts = {...state,
+                hasMore: false,
+                postList:[...action.payload]
+            }
+            return getMyPosts
 
         default :
             return state

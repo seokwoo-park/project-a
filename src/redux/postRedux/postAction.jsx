@@ -7,6 +7,7 @@ const cookies = new Cookies();
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS"
 export const MORE_POSTS = "MORE_POSTS"
 export const NO_MORE_POSTS = "NO_MORE_POSTS"
+export const GET_MY_POSTS = "GET_MY_POSTS"
 
 export const getPostsSuccess = (postList) => {
     return{
@@ -26,6 +27,13 @@ export const noMorePosts = (posts) => {
   return{
     type : NO_MORE_POSTS,
     payload : posts
+  }
+}
+
+export const getMyPostsSuccess = (posts) => {
+  return{
+    type : GET_MY_POSTS,
+    payload: posts
   }
 }
 
@@ -64,6 +72,20 @@ export const fetchMorePosts = (number) => async (dispatch) => {
 })
 }
 
+export const getMyPosts = () => async (dispatch) => {
+    console.log('겟마이포스트 시작')
+    await axios.post('http://localhost:8081/board/mylist',
+    { user_id : cookies.get('nickname')},
+    {
+        headers : {
+        x_auth:cookies.get('x_auth'),
+    }}
+    ).then((res)=> {
+        console.log(res.data)
+        dispatch(getMyPostsSuccess(res.data))
+      })
+    .catch((res)=>console.log(res,'실패'))
+}
 
 // 생성,수정,삭제는 응답에 데이터가 없어 함수로 만든후 마지막에 getPost를 불러오는방식
 
