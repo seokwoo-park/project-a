@@ -27,6 +27,7 @@ export const fetchUser = () =>  async dispatch => {
                 },
             }
         ).then((res)=>{
+            console.log(res)
             dispatch(getUser(res.data[0]))
         })
     } catch (error) {

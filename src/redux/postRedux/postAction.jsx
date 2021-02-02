@@ -7,6 +7,7 @@ const cookies = new Cookies();
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
 export const MORE_POSTS = "MORE_POSTS";
 export const NO_MORE_POSTS = "NO_MORE_POSTS";
+export const GET_MY_POSTS = "GET_MY_POSTS";
 
 export const getPostsSuccess = (postList) => {
   return {
@@ -22,9 +23,16 @@ export const morePosts = (posts) => {
   };
 };
 
-export const noMorePots = (posts) => {
+export const noMorePosts = (posts) => {
   return {
     type: NO_MORE_POSTS,
+    payload: posts,
+  };
+};
+
+export const getMyPostsSuccess = (posts) => {
+  return {
+    type: GET_MY_POSTS,
     payload: posts,
   };
 };
@@ -37,7 +45,14 @@ export const getPosts = () => async (dispatch) => {
     .then((res) => {
       const result = res.data.reverse();
       console.log(result.slice(0, 9));
-      dispatch(getPostsSuccess(result.slice(0, 9)));
+      if (res.data.length === 0) {
+        dispatch(noMorePosts(result));
+      } else {
+        dispatch(getPostsSuccess(result.slice(0, 9)));
+      }
+    })
+    .catch((error) => {
+      alert(`Can't load the posts. Error : ${error}`);
     })
     .catch((error) => {
       alert(`Can't load the posts. Error : ${error}`);
@@ -50,16 +65,37 @@ export const fetchMorePosts = (number) => async (dispatch) => {
     .get("http://localhost:8081/board/list")
     .then((res) => {
       let result = res.data.reverse();
+      console.log(result);
       let data = res.data.slice(0, number);
+      console.log(data);
       if (result.length !== data.length) {
         dispatch(morePosts(data));
       } else {
-        dispatch(noMorePots(result));
+        dispatch(noMorePosts(result));
       }
     })
     .catch((error) => {
       alert(`Can't load the posts. Error : ${error}`);
     });
+};
+
+export const getMyPosts = () => async (dispatch) => {
+  console.log("겟마이포스트 시작");
+  await axios
+    .post(
+      "http://localhost:8081/board/mylist",
+      { user_id: cookies.get("nickname") },
+      {
+        headers: {
+          x_auth: cookies.get("x_auth"),
+        },
+      }
+    )
+    .then((res) => {
+      console.log(res.data);
+      dispatch(getMyPostsSuccess(res.data));
+    })
+    .catch((res) => console.log(res, "실패"));
 };
 
 // 생성,수정,삭제는 응답에 데이터가 없어 함수로 만든후 마지막에 getPost를 불러오는방식
@@ -88,7 +124,7 @@ export const deletePost = (idx) => async (dispatch) => {
         },
       }
     );
-    dispatch(getPosts());
+    dispatch(fetchMorePosts());
   } catch (error) {
     alert(`Can't delete post. Error : ${error}`);
   }
@@ -102,7 +138,7 @@ export const editPost = (formData) => async (dispatch) => {
         x_auth: cookies.get("x_auth"),
       },
     });
-    dispatch(getPosts());
+    dispatch(fetchMorePosts());
   } catch (error) {
     alert(`Can't edit post. Error : ${error}`);
   }

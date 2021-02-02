@@ -4,6 +4,7 @@ import defaultUserImage from "../images/defaultUserInfo.svg";
 import { fetchUser, editProfileUser } from "../../redux/userRedux/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import {useHistory} from "react-router-dom";
 import {
   RiLogoutBoxRLine as LogoutIcon,
   RiDraftLine as ListIcon,
@@ -17,7 +18,7 @@ import "../css/UserInfo.css";
 function UserInfo() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const [, , removeCookie] = useCookies();
 
   const onClickHandler = () => {
@@ -65,11 +66,13 @@ function UserInfo() {
         />
       </div>
       <div className="user-detail">
-        <div className="nickname">{user.user_id}</div>
+          <div className="nickname">{user.user_id}</div>
         <LogoutIcon className="logout-icon" onClick={onClickHandler} />
       </div>
       <div className="icon-box">
-        <ListIcon className="list-icon icon" />
+        <ListIcon className="list-icon icon" 
+         onClick={()=>{history.push('/mypage')}}
+         />
         <BookmarkIcon className="bookmark-icon icon" />
         <HeartIcon className="heart-icon icon" />
         <EditIcon className="edit-icon icon" />
