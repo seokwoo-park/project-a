@@ -12,6 +12,7 @@ import defaultUserImage from "../images/defaultUserInfo.svg";
 import "../css/MyInfo.css";
 
 function MyInfo({ user }) {
+  console.log(user);
   return (
     <>
       <div className="my-info-container">
@@ -21,7 +22,7 @@ function MyInfo({ user }) {
             src={user.profile || defaultUserImage}
             alt="profile image"
           />
-          <label htmlFor="my-profile-image" className="user-edit-photo-box">
+          <label htmlFor="my-profile-image" className="my-edit-photo-box">
             <AddAPhotoIcon className="user-info-photoIcon" />
           </label>
           <input

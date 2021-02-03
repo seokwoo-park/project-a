@@ -21,8 +21,7 @@
   cursor: pointer;
 }
 
-.user-edit-photo-box {
-  display: none;
+.my-edit-photo-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -31,13 +30,17 @@
   height: 120px;
   border-radius: 50%;
   border: 1px solid black;
+  display: none;
 }
 
-.user-edit-photo-box:hover {
+.my-profile-image-wrapper:hover .my-edit-photo-box {
   display: block;
+  cursor: pointer;
 }
 
 .my-info-wrapper {
+  /* border: 1px solid black; */
+  width: 224px;
 }
 .my-nickname-box {
 }
@@ -49,8 +52,6 @@
 }
 
 .my-self-box {
-  width: 224px;
-  height: 34px;
   font-size: 14px;
   color: #7b7b7b;
 }
