@@ -1,0 +1,81 @@
+.my-info-container {
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 936px;
+  height: 218px;
+  border: 1px solid #707070;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-profile-image-wrapper {
+  margin-right: 50px;
+  position: relative;
+}
+
+.my-image {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.user-edit-photo-box {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.user-edit-photo-box:hover {
+  display: block;
+}
+
+.my-info-wrapper {
+}
+.my-nickname-box {
+}
+.nickname {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #7b7b7b;
+}
+
+.my-self-box {
+  width: 224px;
+  height: 34px;
+  font-size: 14px;
+  color: #7b7b7b;
+}
+
+.my-detail-wrapper {
+  margin-left: 50px;
+}
+.my-detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: #7b7b7b;
+  margin: 12px 0;
+
+  cursor: pointer;
+}
+
+.my-detail-item:hover {
+  text-decoration: underline;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.count {
+  margin-left: 40px;
+}
