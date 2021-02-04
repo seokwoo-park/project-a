@@ -8,10 +8,20 @@ import { Motion, spring } from "react-motion";
 import PostMenu from "./PostMenu";
 import PostEdit from "./PostEdit";
 import "../css/Post.css";
+import {useDispatch } from "react-redux";
+import {useHistory} from "react-router-dom";
+import { getMyPosts } from "../../redux/postRedux/postAction";
+import {Cookies} from 'react-cookie';
+
+const cookies = new Cookies();
 
 function Post({ idx, image, profile, title, content, tag, date }) {
   const [postMenu, setPostMenu] = useState(false);
   const [postEdit, setPostEdit] = useState(false);
+
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const menuToggle = () => {
     setPostMenu(!postMenu);
@@ -20,6 +30,12 @@ function Post({ idx, image, profile, title, content, tag, date }) {
   const postEditToggle = () => {
     setPostEdit(!postEdit);
   };
+
+  const goToUserPage = () =>{
+    cookies.set('userPage',title);
+    history.push('/mypage');
+  }
+
 
   //404 error
   const onError = (e) => {
@@ -62,7 +78,9 @@ function Post({ idx, image, profile, title, content, tag, date }) {
           onError={onError}
         />
 
-        <h2 className="post-title">{title}</h2>
+        <h2 className="post-title" onClick={()=>{goToUserPage();}}>
+          {title}
+          </h2>
         <p className="post-content">{content}</p>
 
         <div className="post-footer-container">
@@ -99,6 +117,7 @@ function Post({ idx, image, profile, title, content, tag, date }) {
       >
         {(style) => (
           <PostMenu
+            title = {title}
             postEditToggle={postEditToggle}
             menuToggle={menuToggle}
             style={{ top: style.top, opacity: style.opacity }}

@@ -59,6 +59,28 @@
     font-family: "Noto Sans KR", sans-serif;
     font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.post-title:hover {
+    color: rgb(40, 153, 91);
+    transform: translateY(-5px);
+    transition: 0.5s ease-in-out;
+}
+
+.post-title::after {
+    content: "";
+    display: block;
+    border-bottom: 2px solid rgb(40, 153, 91);
+    width: 0;
+    position: absolute;
+    left: 0;
+    -webkit-transition: 0.5s ease;
+    transition: 0.5s ease;
+}
+
+.post-title:hover::after {
+    width: 100%;
 }
 
 .post-content {

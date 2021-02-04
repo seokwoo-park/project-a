@@ -7,7 +7,7 @@ const cookies = new Cookies();
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
 export const MORE_POSTS = "MORE_POSTS";
 export const NO_MORE_POSTS = "NO_MORE_POSTS";
-export const GET_MY_POSTS = "GET_MY_POSTS";
+export const GET_USER_POSTS = "GET_USER_POSTS";
 
 export const getPostsSuccess = (postList) => {
   return {
@@ -30,9 +30,9 @@ export const noMorePosts = (posts) => {
   };
 };
 
-export const getMyPostsSuccess = (posts) => {
+export const getUserPostsSuccess = (posts) => {
   return {
-    type: GET_MY_POSTS,
+    type: GET_USER_POSTS,
     payload: posts,
   };
 };
@@ -79,12 +79,12 @@ export const fetchMorePosts = (number) => async (dispatch) => {
     });
 };
 
-export const getMyPosts = () => async (dispatch) => {
-  console.log("겟마이포스트 시작");
+export const getUserPosts = (userId) => async (dispatch) => {
+  console.log(userId + '의 페이지')
   await axios
     .post(
       "http://localhost:8081/board/mylist",
-      { user_id: cookies.get("nickname") },
+      { user_id: userId },
       {
         headers: {
           x_auth: cookies.get("x_auth"),
@@ -93,7 +93,7 @@ export const getMyPosts = () => async (dispatch) => {
     )
     .then((res) => {
       console.log(res.data);
-      dispatch(getMyPostsSuccess(res.data));
+      dispatch(getUserPostsSuccess(res.data.reverse()));
     })
     .catch((res) => console.log(res, "실패"));
 };

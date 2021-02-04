@@ -3,7 +3,7 @@ import Auth from "../RoutesContainer/components/Auth.jsx";
 import Login from "../RoutesContainer/components/LogIn.jsx";
 import SignUp from "../RoutesContainer/components/SignUp.jsx";
 import Home from "../RoutesContainer/components/Home.jsx";
-import MyPage from '../RoutesContainer/components/MyPage.jsx'
+import UserPage from '../RoutesContainer/components/UserPage.jsx'
 import { Switch, Route } from "react-router-dom";
 
 export const isLoadingContext = React.createContext();
@@ -20,7 +20,7 @@ function Routes() {
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/mypage" component={MyPage}/>
+          <Route path="/mypage" component={UserPage}/>
           <Route
             render={({ location }) => {
               return (

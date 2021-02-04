@@ -11,8 +11,7 @@ import {
 import defaultUserImage from "../images/defaultUserInfo.svg";
 import "../css/MyInfo.css";
 
-function MyInfo({ user }) {
-  console.log(user);
+function UserPageInfo({isMyPage, user }) {
   return (
     <>
       <div className="my-info-container">
@@ -22,20 +21,24 @@ function MyInfo({ user }) {
             src={user.profile || defaultUserImage}
             alt="profile image"
           />
-          <label htmlFor="my-profile-image" className="my-edit-photo-box">
-            <AddAPhotoIcon className="user-info-photoIcon" />
-          </label>
-          <input
-            id="my-profile-image"
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-          />
+            {isMyPage ? 
+            <>
+              <label htmlFor="my-profile-image" className="my-edit-photo-box">
+                <AddAPhotoIcon className="user-info-photoIcon" />
+              </label>
+              <input
+                id="my-profile-image"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+              />
+            </>
+              : null
+              }
         </div>
         <div className="my-info-wrapper">
           <div className="my-nickname-box">
             <div className="nickname">{user.user_id}</div>
-            <LogoutIcon className="logout-icon" />
           </div>
           <div className="my-self-box">
             나를 한줄로 표현하자면 어떻게 표현할것인가요? 여기에는 그런 글귀가
@@ -64,4 +67,4 @@ function MyInfo({ user }) {
   );
 }
 
-export default MyInfo;
+export default UserPageInfo;

@@ -19,7 +19,7 @@ function UserInfo() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [, , removeCookie] = useCookies();
+  const [, setCookie, removeCookie] = useCookies();
 
   const onClickHandler = () => {
     removeCookie("x_auth");
@@ -71,7 +71,8 @@ function UserInfo() {
       </div>
       <div className="icon-box">
         <ListIcon className="list-icon icon" 
-         onClick={()=>{history.push('/mypage')}}
+         onClick={()=>{history.push('/mypage')
+        setCookie('userPage',user.user_id) }}
          />
         <BookmarkIcon className="bookmark-icon icon" />
         <HeartIcon className="heart-icon icon" />

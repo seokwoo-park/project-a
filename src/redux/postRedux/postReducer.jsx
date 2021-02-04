@@ -2,7 +2,7 @@ import {
   GET_POSTS_SUCCESS,
   MORE_POSTS,
   NO_MORE_POSTS,
-  GET_MY_POSTS,
+  GET_USER_POSTS,
 } from "./postAction";
 
 const initialState = {
@@ -37,13 +37,13 @@ const postsReducer = (state = initialState, action) => {
       };
       return noMorePosts;
 
-    case GET_MY_POSTS:
-      const getMyPosts = {
+    case GET_USER_POSTS:
+      const getUserPosts = {
         ...state,
         hasMore: false,
         postList: [...action.payload],
       };
-      return getMyPosts;
+      return getUserPosts;
 
     default:
       return state;
