@@ -9,21 +9,23 @@ import axios from "axios";
 
 const cookies = new Cookies();
 
-function UserPage() {
+function UserPage({match}) {
   const user = useSelector((state) => state.user);
   const posts = useSelector((state) => state.posts.postList);
   const dispatch = useDispatch();
-  const whosPage = cookies.get('userPage')
+
+  const userName = match.params.user;
   const [userInfo,setUserInfo] = useState();
   const [isMyPage,setIsMyPage] = useState();
+
   
   const getUserInfo = async() => {
-   if(whosPage !== user.user_id){
+   if(userName !== user.user_id){
      console.log('본인의 페이지가 아닙니다.');
      setIsMyPage(false);
      await axios.post(
       "http://localhost:8081/user/myprofile",
-          { nickName: whosPage },
+          { nickName: userName },
           {
               headers: {
               x_auth:cookies.get("x_auth"),
@@ -35,15 +37,12 @@ function UserPage() {
      setIsMyPage(true);
    }
   }
-  
+
+  console.log(posts.length)
 
   useEffect(() => {
     getUserInfo();
-    dispatch(getUserPosts(whosPage))
-    
-    return () => {
-      cookies.remove('userPage')
-    }
+    dispatch(getUserPosts(userName))
   }, []);
 
   return (
@@ -52,24 +51,29 @@ function UserPage() {
       <UserPageInfo 
       isMyPage={isMyPage}
       user={userInfo||user} />
-      <section className="content-section">
-        {posts.map((post) => {
-          return (
-            <Post
-              className="content-section"
-              key={post.idx}
-              idx={post.idx}
-              id={post.user_id}
-              title={post.user_id}
-              content={post.content}
-              image={post.image}
-              tag={["react", "javascript", "node"]}
-              date={post.created}
-              profile={post.profile}
-            />
-          );
-        })}
-      </section>
+      {posts.length >= 1 ?
+        <section className="content-section">
+          {posts.map((post) => {
+            return (
+              <Post
+                className="content-section"
+                key={post.idx}
+                idx={post.idx}
+                id={post.user_id}
+                title={post.user_id}
+                content={post.content}
+                image={post.image}
+                tag={["react", "javascript", "node"]}
+                date={post.created}
+                profile={post.profile}
+              />
+            );
+          })}
+        </section>
+        
+        : <div className="content-loading">No posts to see! <br/>
+        share the posts to people</div>
+      }
     </div>
   );
 }

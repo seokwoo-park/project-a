@@ -9,19 +9,12 @@ import PostMenu from "./PostMenu";
 import PostEdit from "./PostEdit";
 import "../css/Post.css";
 import {useDispatch } from "react-redux";
-import {useHistory} from "react-router-dom";
-import { getMyPosts } from "../../redux/postRedux/postAction";
-import {Cookies} from 'react-cookie';
+import {useHistory,Link} from "react-router-dom";
 
-const cookies = new Cookies();
 
 function Post({ idx, image, profile, title, content, tag, date }) {
   const [postMenu, setPostMenu] = useState(false);
   const [postEdit, setPostEdit] = useState(false);
-
-
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   const menuToggle = () => {
     setPostMenu(!postMenu);
@@ -30,11 +23,6 @@ function Post({ idx, image, profile, title, content, tag, date }) {
   const postEditToggle = () => {
     setPostEdit(!postEdit);
   };
-
-  const goToUserPage = () =>{
-    cookies.set('userPage',title);
-    history.push('/mypage');
-  }
 
 
   //404 error
@@ -78,9 +66,13 @@ function Post({ idx, image, profile, title, content, tag, date }) {
           onError={onError}
         />
 
-        <h2 className="post-title" onClick={()=>{goToUserPage();}}>
+       <Link to={`/mypage/${title}`}>
+        <h2 className="post-title" >
           {title}
           </h2>
+        </Link>
+
+        
         <p className="post-content">{content}</p>
 
         <div className="post-footer-container">

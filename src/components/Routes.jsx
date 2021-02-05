@@ -20,7 +20,7 @@ function Routes() {
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/mypage" component={UserPage}/>
+          <Route path='/mypage/:user' component={UserPage}/>
           <Route
             render={({ location }) => {
               return (

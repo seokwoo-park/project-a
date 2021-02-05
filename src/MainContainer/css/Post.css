@@ -13,6 +13,7 @@
     overflow: hidden;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
 }
+
 /* 
 .post-container:nth-child(3n + 1) {
     margin: 10px 20px;
@@ -60,9 +61,12 @@
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
+    color: black;
 }
 
 .post-title:hover {
+    text-decoration: none;
+    border-bottom: none;
     color: rgb(40, 153, 91);
     transform: translateY(-5px);
     transition: 0.5s ease-in-out;
@@ -71,7 +75,7 @@
 .post-title::after {
     content: "";
     display: block;
-    border-bottom: 2px solid rgb(40, 153, 91);
+    border-bottom: 1px solid rgb(40, 153, 91);
     width: 0;
     position: absolute;
     left: 0;

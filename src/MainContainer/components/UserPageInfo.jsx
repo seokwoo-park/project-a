@@ -9,9 +9,15 @@ import {
   RiUserSettingsLine as SettingIcon,
 } from "react-icons/ri";
 import defaultUserImage from "../images/defaultUserInfo.svg";
-import "../css/MyInfo.css";
+import "../css/UserPageInfo.css";
 
 function UserPageInfo({isMyPage, user }) {
+
+  const onErrorImage = (e) => {
+    e.target.setAttribute("src", defaultUserImage);
+    alert(`Couldn't load the profile picture`);
+  };
+
   return (
     <>
       <div className="my-info-container">
@@ -19,6 +25,7 @@ function UserPageInfo({isMyPage, user }) {
           <img
             className="my-image"
             src={user.profile || defaultUserImage}
+            onError={onErrorImage}
             alt="profile image"
           />
             {isMyPage ? 

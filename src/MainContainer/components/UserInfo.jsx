@@ -3,8 +3,8 @@ import { useCookies } from "react-cookie";
 import defaultUserImage from "../images/defaultUserInfo.svg";
 import { fetchUser, editProfileUser } from "../../redux/userRedux/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import {Link} from 'react-router-dom';
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import {useHistory} from "react-router-dom";
 import {
   RiLogoutBoxRLine as LogoutIcon,
   RiDraftLine as ListIcon,
@@ -18,8 +18,7 @@ import "../css/UserInfo.css";
 function UserInfo() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [, setCookie, removeCookie] = useCookies();
+  const [, , removeCookie] = useCookies();
 
   const onClickHandler = () => {
     removeCookie("x_auth");
@@ -70,10 +69,10 @@ function UserInfo() {
         <LogoutIcon className="logout-icon" onClick={onClickHandler} />
       </div>
       <div className="icon-box">
-        <ListIcon className="list-icon icon" 
-         onClick={()=>{history.push('/mypage')
-        setCookie('userPage',user.user_id) }}
-         />
+        <Link to={`/mypage/${user.user_id}`}>
+          <ListIcon className="list-icon icon" />
+        </Link>
+
         <BookmarkIcon className="bookmark-icon icon" />
         <HeartIcon className="heart-icon icon" />
         <EditIcon className="edit-icon icon" />

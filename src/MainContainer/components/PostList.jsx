@@ -24,7 +24,7 @@ function PostList() {
         next={() => {
           setTimeout(() => {
             dispatch(fetchMorePosts(scrollPage));
-            setScrollPage(scrollPage + 6);
+            setScrollPage(nextPost.current += 6);
             // nextPost.current += 6;
           }, 1000);
         }}
